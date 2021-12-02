@@ -1,0 +1,21 @@
+.actions {
+    margin-top: 1rem;
+    text-align: right;
+  }
+  
+  .actions button {
+    font: inherit;
+    cursor: pointer;
+    background-color: #000000;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  
+  .actions button:hover,
+  .actions button:active {
+    background-color: #111111;
+    border-color: #000000;
+  }

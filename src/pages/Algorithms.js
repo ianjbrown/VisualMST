@@ -1,8 +1,10 @@
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import AlgorithmPage from "./Algorithm";
 import AlgorithmList from "../components/algorithms/AlgorithmList";
+import Graph from "../datastructures/Graph";
 
 function AlgorithmsPage() {
+  var g = new Graph();
   const match = useRouteMatch();
   const algorithmsData = [
     {

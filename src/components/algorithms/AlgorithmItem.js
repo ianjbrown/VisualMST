@@ -14,8 +14,12 @@ function AlgorithmItem(props) {
         {props.steps}
       </div>
       <div className={classes.action}>
-        <Link to={"/algorithms/" + props.id }>
-          <button>Go!</button>
+        <Link to={"/algorithms/" + props.id + "-generate"}>
+          <button>Generate Graph</button>
+        </Link>
+        <span> </span>
+        <Link to={"/algorithms/" + props.id + "-import"}>
+          <button>Import Graph</button>
         </Link>
       </div>
     </Card>

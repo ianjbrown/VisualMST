@@ -7,10 +7,8 @@ function NewGraphForm(props) {
 
   function submitHandler(event) {
     event.preventDefault();
-
     const enteredVertexNo = verticesInputRef.current.value;
-
-    props.onGenGraph(enteredVertexNo);
+    props.onSubmit(enteredVertexNo);
   }
 
   return (

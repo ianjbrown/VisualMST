@@ -1,16 +1,17 @@
 .header {
     width: 90%;
-    height: 5rem;
+    height: 7rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #34568B;
+    background-color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
     padding: 0 5%;
   }
   
   .logo {
     font-size: 2rem;
-    color: white;
+    color: #34568B;
     font-weight: bold;
   }
   
@@ -32,13 +33,13 @@
   .header a {
     text-decoration: none;
     font-size: 1.5rem;
-    color: #b8bcfc;
+    color: #34568B;
   }
   
   .header a:hover,
   .header a:active,
   .header a.active {
-    color: white;
+    color: #b8bcfc;
   }
   
   .badge {
