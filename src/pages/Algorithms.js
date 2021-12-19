@@ -2,6 +2,7 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 import AlgorithmPage from "./Algorithm";
 import AlgorithmList from "../components/algorithms/AlgorithmList";
 import Graph from "../datastructures/Graph";
+import MainNavigation from "../components/layout/MainNavigation";
 
 function AlgorithmsPage() {
   var g = new Graph();
@@ -70,6 +71,7 @@ function AlgorithmsPage() {
           <AlgorithmPage algorithms={algorithmsData}/>
         </Route>
         <Route exact path={match.path}>
+          <MainNavigation/>
           <AlgorithmList algorithms={algorithmsData} />
         </Route>
       </Switch>

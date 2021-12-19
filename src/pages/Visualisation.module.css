@@ -1,0 +1,115 @@
+.algorithmStateMessage {
+  position: fixed;
+  left: 250px;
+  right: 250px;
+  top: 75px;
+  font-size: xx-large;
+  text-align: center;
+  color: #34568b;
+}
+
+.canvasDiv {
+  position: fixed;
+  left: 350px;
+  right: 950px;
+  top: 130px;
+  bottom: 80px;
+  z-index: 1;
+  background-color: Black;
+}
+
+.canvasStyle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  z-index: 1;
+}
+
+.infoPanel {
+  padding-left: 10px;
+  position: fixed;
+  left: 1430px;
+  right: 40px;
+  top: 130px;
+  bottom: 80px;
+  background-color: #a8a8ff;
+}
+
+.infoPanel ul {
+  margin-top: 2px;
+  list-style: none;
+  padding-left: 6px;
+}
+
+.infoPanel ul li:nth-child(1) {
+  display: inline-block;
+  background: #898989;
+  font-weight: bold;
+  color: orange;
+}
+
+.infoPanel ol {
+  margin-top: 2px;
+  padding-left: 25px;
+}
+
+.infoPanel ol li:nth-child(1) {
+  color: #ff0000;
+}
+
+.infoPanelTab {
+  padding-top: 371px;
+  position: fixed;
+  left: 1885px;
+  right: 5px;
+  top: 130px;
+  bottom: 80px;
+  background-color: #a8a8ff;
+}
+
+.edgesQueue {
+  position: fixed;
+  /* top: 370px;
+  bottom: 535px;
+  left: 990px;
+  right: 650px; */
+}
+
+.edgesQueueList {
+  padding-right: 25px;
+  position: fixed;
+  overflow: scroll;
+  top: 445px;
+  bottom: 325px;
+  /*
+  left: 1000px;
+  right: 350px; */
+}
+
+.edgesQueueList::-webkit-scrollbar {
+  width: 10px;
+}
+
+.edgesQueueList::-webkit-scrollbar-track {
+  background: #a8a8ff;
+}
+
+.edgesQueueList::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.edgesQueueList::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.edgesQueueList::-webkit-scrollbar-corner {
+  background: #a8a8ff;
+}
+
+.disjointSets {
+  position: fixed;
+  top: 635px;
+  bottom: 300px;
+}

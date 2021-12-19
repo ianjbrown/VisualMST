@@ -1,26 +1,100 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Children } from "react";
 import { Redirect } from "react-router-dom";
+import { useSpring, animated } from "react-spring";
+
 import Circle from "../datastructures/Circle";
-import Card from "../components/ui/Card";
 import PlayPause from "../components/ui/PlayBack";
+import classes from "./Visualisation.module.css";
+import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
+import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
+import { ListItem } from "@mui/material";
 
 function VisualisationPage(props) {
   const [algorithmState, setAlgorithmState] = useState(0);
+  const [algorithmStep, setAlgorithmStep] = useState(0);
+  const [edgesQueue, setEdgesQueue] = useState([]);
+  const [edgesQueueRemoved, setEdgesQueueRemoved] = useState([]);
   const [backgroundOn, setBackgroundOn] = useState(true);
   const [Paused, setPaused] = useState(true);
+  const [Expanded, setExpanded] = useState(true);
+
+  const expandInfo = useSpring({
+    opacity: Expanded ? 1 : 0,
+    marginLeft: Expanded ? 0 : 1000,
+  });
+  const expandCanvas = useSpring({
+    left: Expanded ? "0px" : "10px",
+    right: Expanded ? "500px" : "45px",
+  });
+  const fadeMessage = useSpring({
+    opacity: 0,
+  });
+
   const notInitialRender = useRef(false);
+
+  let expandArrow;
+  if (Expanded) {
+    expandArrow = (
+      <ArrowForwardIosOutlinedIcon
+        onClick={expandHandler}
+      ></ArrowForwardIosOutlinedIcon>
+    );
+  } else {
+    expandArrow = (
+      <ArrowBackIosNewOutlinedIcon
+        onClick={expandHandler}
+      ></ArrowBackIosNewOutlinedIcon>
+    );
+  }
 
   let circles = [];
   let graph = props.graph;
   let MSTGraph = props.MSTGraph;
   let startingVertex = props.startingVertex;
+  let edgesQ = edgesQueue;
+  let edgesQRemoved = edgesQueueRemoved;
+  const edgesQueuePrint = edgesQ.map((edge) => (
+    <li>
+      (({edge.elem[0]},{edge.elem[1]}), {edge.prio})
+    </li>
+  ));
+
+  const algorithmStates = [
+    "Edges are sorted by their weight in non-decreasing order",
+    "While there are still edges to be process in the queue, select the edge with the lowest weight",
+    `The edge between vertices ${MSTGraph[2][0].elem[0]} and ${MSTGraph[2][0].elem[1]}, with a weight of ${MSTGraph[2][0].prio}`,
+    "If adding e to MST doesn't create cycle;",
+    "Add e to MST",
+    "Else",
+    "Reject e from MST",
+    "We have found a minimum spanning tree with n-1 edges",
+  ];
+
+  let algorithmStateMessage = (
+    <animated.div className={classes.algorithmStateMessage}>
+      {algorithmStates[algorithmState]}
+    </animated.div>
+  );
+
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
-  let canvasStyle = {
-    border: "1px solid black",
-    width: "800px",
-    height: "750px",
-  };
+
+  function edgeInMST(edge) {
+    console.log("Enter edgeInMST function");
+    let found;
+    MSTGraph[1].forEach((MSTEdge) => {
+      console.log(MSTEdge);
+      console.log(edge);
+      if (
+        edge.elem[0] === MSTEdge[0] &&
+        edge.elem[1] === MSTEdge[1] &&
+        edge.prio === MSTEdge[2]
+      ) {
+        found = true;
+      }
+    });
+    return found;
+  }
 
   function prepareCanvas() {
     const canvas = canvasRef.current;
@@ -30,14 +104,14 @@ function VisualisationPage(props) {
     // canvas.style.height = `${window.innerHeight}px`;
 
     const ctx = canvas.getContext("2d");
-    ctx.scale(2, 2);
+    ctx.scale(1, 2);
     ctx.lineCap = "round";
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
     ctxRef.current = ctx;
     ctx.font = "30px Arial";
     ctx.fillStyle = "#eee";
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
   function drawCircles() {
@@ -46,9 +120,9 @@ function VisualisationPage(props) {
     const ctx = canvas.getContext("2d");
     for (var i = 0; i < graph.noOfVertices; i++) {
       if (i === parseInt(startingVertex)) var colour = "orange";
-      else var colour = "black";
+      else colour = "black";
       var circle = new Circle(
-        240 + 200 * Math.cos((i * 2 * Math.PI) / graph.noOfVertices),
+        420 + 400 * Math.cos((i * 2 * Math.PI) / graph.noOfVertices),
         240 + 200 * Math.sin((i * 2 * Math.PI) / graph.noOfVertices),
         i,
         colour
@@ -95,12 +169,12 @@ function VisualisationPage(props) {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#eee";
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     drawCircles();
     if (backgroundOn) drawGraph(graph.AdjList);
 
     var steps = MSTGraph[1];
-    for (var i = 0; i < algorithmState; i++) {
+    for (var i = 0; i < algorithmStep; i++) {
       // console.log(steps);
       var step = steps[i];
       var p1 = step[0];
@@ -108,40 +182,233 @@ function VisualisationPage(props) {
       var weight = step[2];
 
       ctx.font = "bold 12.5px Arial";
-      ctx.fillStyle = "red";
+      ctx.fillStyle = "green";
       ctx.fillText(
         weight,
         (circles[p1].x + circles[p2].x + 5) / 2,
         (circles[p1].y + circles[p2].y + 5) / 2
       );
-      ctx.clearRect(0, 0, 125, 100);
-      ctx.fillStyle = "#eee";
-      ctx.fillRect(0, 0, 125, 100)
-      ctx.fillStyle = "blue";
-      ctx.fillText("Step " + (i + 1), 15, 30);
-      ctx.fillText("Add shortest edge...", 15, 50);
-      ctx.fillText("between " + p1 + " and " + p2, 15, 70);
-      if (i === graph.noOfVertices - 2) {
-        ctx.fillText("MST found", 15, 90);
-      }
+      // ctx.clearRect(0, 0, 125, 100);
+      // ctx.fillStyle = "#eee";
+      // ctx.fillRect(0, 0, 125, 100);
+      // ctx.fillStyle = "blue";
+      // ctx.fillText("Step " + (i + 1), 15, 30);
+      // ctx.fillText("Add shortest edge...", 15, 50);
+      // ctx.fillText("between " + p1 + " and " + p2, 15, 70);
+      // if (i === graph.noOfVertices - 2) {
+      //   ctx.fillText("MST found", 15, 90);
+      // }
 
       ctx.beginPath();
-      ctx.strokeStyle = "orange";
+      ctx.strokeStyle = "green";
       ctx.lineWidth = 1;
       ctx.moveTo(circles[p1].x, circles[p1].y);
       ctx.lineTo(circles[p2].x, circles[p2].y);
       ctx.stroke();
     }
+    if (algorithmState === 2) {
+      ctx.beginPath();
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 1;
+      ctx.moveTo(
+        circles[MSTGraph[2][0].elem[0]].x,
+        circles[MSTGraph[2][0].elem[0]].y
+      );
+      ctx.lineTo(
+        circles[MSTGraph[2][0].elem[1]].x,
+        circles[MSTGraph[2][0].elem[1]].y
+      );
+      ctx.stroke();
+      ctx.font = "bold 12.5px Arial";
+      ctx.fillStyle = "red";
+      ctx.fillText(
+        MSTGraph[2][0].prio,
+        (circles[MSTGraph[2][0].elem[0]].x +
+          circles[MSTGraph[2][0].elem[1]].x +
+          5) /
+          2,
+        (circles[MSTGraph[2][0].elem[0]].y +
+          circles[MSTGraph[2][0].elem[1]].y +
+          5) /
+          2
+      );
+    }
+
+    if (algorithmState === 3) {
+      ctx.beginPath();
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 1;
+      ctx.moveTo(
+        circles[MSTGraph[2][0].elem[0]].x,
+        circles[MSTGraph[2][0].elem[0]].y
+      );
+      ctx.lineTo(
+        circles[MSTGraph[2][0].elem[1]].x,
+        circles[MSTGraph[2][0].elem[1]].y
+      );
+      ctx.stroke();
+      ctx.font = "bold 12.5px Arial";
+      ctx.fillStyle = "red";
+      ctx.fillText(
+        MSTGraph[2][0].prio,
+        (circles[MSTGraph[2][0].elem[0]].x +
+          circles[MSTGraph[2][0].elem[1]].x +
+          5) /
+          2,
+        (circles[MSTGraph[2][0].elem[0]].y +
+          circles[MSTGraph[2][0].elem[1]].y +
+          5) /
+          2
+      );
+    }
+
+    if (algorithmState === 4) {
+      ctx.beginPath();
+      ctx.strokeStyle = "green";
+      ctx.lineWidth = 1;
+      ctx.moveTo(
+        circles[MSTGraph[2][0].elem[0]].x,
+        circles[MSTGraph[2][0].elem[0]].y
+      );
+      ctx.lineTo(
+        circles[MSTGraph[2][0].elem[1]].x,
+        circles[MSTGraph[2][0].elem[1]].y
+      );
+      ctx.stroke();
+      ctx.font = "bold 12.5px Arial";
+      ctx.fillStyle = "green";
+      ctx.fillText(
+        MSTGraph[2][0].prio,
+        (circles[MSTGraph[2][0].elem[0]].x +
+          circles[MSTGraph[2][0].elem[1]].x +
+          5) /
+          2,
+        (circles[MSTGraph[2][0].elem[0]].y +
+          circles[MSTGraph[2][0].elem[1]].y +
+          5) /
+          2
+      );
+    }
+    if (algorithmState === 5) {
+      ctx.beginPath();
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 1;
+      ctx.moveTo(
+        circles[MSTGraph[2][0].elem[0]].x,
+        circles[MSTGraph[2][0].elem[0]].y
+      );
+      ctx.lineTo(
+        circles[MSTGraph[2][0].elem[1]].x,
+        circles[MSTGraph[2][0].elem[1]].y
+      );
+      ctx.stroke();
+      ctx.font = "bold 12.5px Arial";
+      ctx.fillStyle = "red";
+      ctx.fillText(
+        MSTGraph[2][0].prio,
+        (circles[MSTGraph[2][0].elem[0]].x +
+          circles[MSTGraph[2][0].elem[1]].x +
+          5) /
+          2,
+        (circles[MSTGraph[2][0].elem[0]].y +
+          circles[MSTGraph[2][0].elem[1]].y +
+          5) /
+          2
+      );
+    }
+    if (algorithmState === 6) {
+      ctx.beginPath();
+      ctx.strokeStyle = "grey";
+      ctx.lineWidth = 1;
+      ctx.moveTo(
+        circles[MSTGraph[2][0].elem[0]].x,
+        circles[MSTGraph[2][0].elem[0]].y
+      );
+      ctx.lineTo(
+        circles[MSTGraph[2][0].elem[1]].x,
+        circles[MSTGraph[2][0].elem[1]].y
+      );
+      ctx.stroke();
+      ctx.font = "bold 12.5px Arial";
+      ctx.fillStyle = "grey";
+      ctx.fillText(
+        MSTGraph[2][0].prio,
+        (circles[MSTGraph[2][0].elem[0]].x +
+          circles[MSTGraph[2][0].elem[1]].x +
+          5) /
+          2,
+        (circles[MSTGraph[2][0].elem[0]].y +
+          circles[MSTGraph[2][0].elem[1]].y +
+          5) /
+          2
+      );
+    }
+
+  }
+
+  function expandHandler() {
+    setExpanded(!Expanded);
+    graphStep(MSTGraph);
+  }
+
+  function firstHandler() {
+    if (!Paused) return;
+    setAlgorithmState(0);
   }
 
   function backHandler() {
     if (algorithmState <= 0 || !Paused) return;
-    setAlgorithmState(algorithmState - 1);
+    if (algorithmState === 7) {
+      setAlgorithmState(1);
+    } else if (algorithmState === 1 && algorithmStep > 0) {
+      let unshiftEdge = edgesQRemoved.pop();
+      console.log(unshiftEdge);
+      edgesQ.unshift(unshiftEdge);
+      setEdgesQueue(edgesQ);
+      setEdgesQueueRemoved(edgesQRemoved);
+      setAlgorithmStep(algorithmStep - 1);
+      if (edgeInMST(unshiftEdge)) {
+        setAlgorithmState(4);
+      } else {
+        setAlgorithmState(6);
+      }
+    } else {
+      setAlgorithmState(algorithmState - 1);
+    }
+    // setAlgorithmState(algorithmState - 1);
   }
 
   function forwardHandler() {
-    if (algorithmState >= MSTGraph[0].noOfVertices - 1 || !Paused) return;
-    setAlgorithmState(algorithmState + 1);
+    console.log(MSTGraph[2]);
+    console.log(MSTGraph[1]);
+    if (algorithmStep >= (MSTGraph[2].length + edgesQRemoved.length)|| !Paused) {
+      console.log("0")
+      return;
+    }
+    if (algorithmState === 1 && !edgesQ.length) {
+      console.log("1");
+      setAlgorithmState(7);
+    } else if (algorithmState === 3 && !edgeInMST(MSTGraph[2][0])) {
+      console.log("2");
+      setAlgorithmState(5);
+
+    } else if (algorithmState === 4 || algorithmState === 6) {
+      console.log("3");
+      setAlgorithmState(1);
+      setAlgorithmStep(algorithmStep + 1);
+      edgesQueueRemoved.push(MSTGraph[2][0]);
+      edgesQueue.shift();
+      setEdgesQueue(edgesQ);
+      setEdgesQueueRemoved(edgesQRemoved);
+    } else {
+      console.log("4");
+      setAlgorithmState(algorithmState + 1);
+    }
+  }
+
+  function lastHandler() {
+    if (!Paused) return;
+    setAlgorithmState(MSTGraph[0].noOfVertices - 1);
   }
 
   function toggleBackgoundGraphHandler(toggle) {
@@ -167,6 +434,7 @@ function VisualisationPage(props) {
     prepareCanvas();
     drawCircles();
     drawGraph(graph.AdjList);
+    setEdgesQueue(MSTGraph[2]);
   }, []);
 
   useEffect(() => {
@@ -178,17 +446,43 @@ function VisualisationPage(props) {
 
   return (
     <div>
-      <div>
-        <canvas style={canvasStyle} ref={canvasRef} />
+      {algorithmStateMessage}
+      <animated.div className={classes.canvasDiv} style={expandCanvas}>
+        <canvas className={classes.canvasStyle} ref={canvasRef} />
+      </animated.div>
+      <div className={classes.infoPanelTab}>{expandArrow}</div>
+      <animated.div className={classes.infoPanel} style={expandInfo}>
         <div>
-          <PlayPause
-            onBack={backHandler}
-            onForward={forwardHandler}
-            onToggleBackgroundGraph={toggleBackgoundGraphHandler}
-            onPlayPause={playPauseHandler}
-          />
+          <h1>Pseudocode</h1>
+          <ul style={{}}>
+            <li>Sort edges in non-decreasing order;</li>
+            <li>While edges remain in queue</li>
+            <li>&emsp; e = edge with smallest weight;&emsp;</li>
+            <li>&emsp; If adding e to MST doesn't create cycle&emsp;</li>
+            <li>&emsp;&emsp; Add e to MST;&emsp;&emsp;</li>
+            <li>&emsp; Else&emsp;</li>
+            <li>&emsp;&emsp; Reject e from MST;&emsp;&emsp;</li>
+            <li>We have found a minimum spanning tree with n-1 edges</li>
+          </ul>
         </div>
-      </div>
+        <div className={classes.edgesQueue}>
+          <h1>Edges Queue</h1>
+        </div>
+        <div className={classes.edgesQueueList}>
+          <ol>{edgesQueuePrint}</ol>
+        </div>
+        <div className={classes.disjointSets}>
+          <h1>Disjoint Sets</h1>
+        </div>
+      </animated.div>
+      <PlayPause
+        onFirst={firstHandler}
+        onBack={backHandler}
+        onForward={forwardHandler}
+        onLast={lastHandler}
+        onToggleBackgroundGraph={toggleBackgoundGraphHandler}
+        onPlayPause={playPauseHandler}
+      />
     </div>
   );
 }

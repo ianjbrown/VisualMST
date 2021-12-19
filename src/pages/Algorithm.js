@@ -12,6 +12,7 @@ import NewGraphForm from "../components/algorithms/NewGraphForm";
 import UploadGraphForm from "../components/algorithms/UploadGraphForm";
 import VisualisationPage from "./Visualisation";
 import StartingVertexForm from "../components/algorithms/StartingVertexForm";
+import MainNavigaton from "../components/layout/MainNavigation";
 
 function AlgorithmPage(props) {
   const [noOfVertices, setNoOfVertices] = useState();
@@ -110,6 +111,7 @@ function AlgorithmPage(props) {
           />
         </Route>
         <Route path={match.path}>
+          <MainNavigaton />
           <h1>{algName}</h1>
           <NewGraphForm onSubmit={selectVertexNoHandler} />
           {algName === "Prim's Algorithm" && noOfVertices && (

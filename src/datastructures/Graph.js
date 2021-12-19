@@ -183,7 +183,9 @@ class Graph {
         edgesQueue.enqueue([element[0], adjacent.node], adjacent.weight);
       }
     }
-
+    const edgesQueueInitial = Object.assign([], edgesQueue.items);
+    console.log(edgesQueueInitial);
+    console.log(typeof edgesQueueInitial)
     while (!edgesQueue.isEmpty()) {
       const nextEdge = edgesQueue.dequeue();
       const vertices = nextEdge.elem;
@@ -199,7 +201,7 @@ class Graph {
     }
     console.log(JSON.parse(JSON.stringify(uf)));
     console.log(edgeSequence);
-    return [MST, edgeSequence];
+    return [MST, edgeSequence, edgesQueueInitial];
   }
 
   prim(startingVertex) {

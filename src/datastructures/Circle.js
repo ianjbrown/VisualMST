@@ -3,7 +3,7 @@ class Circle {
     this.x = x;
     this.y = y;
     this.num = num;
-    this.radius = 20;
+    this.radius = 15;
     this.colour = colour;
   }
 
@@ -15,8 +15,8 @@ class Circle {
     ctx.fill();
     ctx.stroke();
     ctx.fillStyle = "white";
-    ctx.font = "30px Arial";
-    ctx.fillText(this.num, this.num < 10 ? this.x - 9 : this.x - 18, this.y + 8);
+    ctx.font = "20px Arial";
+    ctx.fillText(this.num, this.num < 10 ? this.x - 6 : this.x - 10, this.y + 6);
   }
   
   setColour(colour) {

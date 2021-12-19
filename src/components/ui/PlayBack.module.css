@@ -1,3 +1,30 @@
+.bar {
+  font: inherit;
+  padding-left: 850px;
+  background-color: #D9D9D6;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 75px;
+  width: 100%;
+  border: 1px solid #000000;
+}
+
+.barToggle {
+  left: 1550px;
+  top: 5px;
+  position: absolute;
+  z-index: 1;
+}
+
+.barToggleText {
+  left: 1618px;
+  top:25px;
+  position: absolute;
+  z-index: 1;
+  font-weight: bold;
+}
 .actions {
     margin-top: 1rem;
     text-align: right;
