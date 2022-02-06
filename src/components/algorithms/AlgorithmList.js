@@ -1,11 +1,11 @@
 import AlgorithmItem from "./AlgorithmItem";
-import classes from "./AlgorithmList.module.css";
+import { Row } from "react-bootstrap";
 
 function AlgorithmList(props) {
   return (
     <div>
-      <h2>Please select an algorithm for visualisation.</h2>
-      <ul className={classes.list}>
+      <h2 className="pb-3">Please select an algorithm for visualisation.</h2>
+      <Row xxl={1} className="d-flex justify-content-center">
         {props.algorithms.map((algorithm) => (
           <AlgorithmItem
             id={algorithm.id}
@@ -14,7 +14,7 @@ function AlgorithmList(props) {
             steps={algorithm.steps}
           />
         ))}
-      </ul>
+      </Row>
     </div>
   );
 }

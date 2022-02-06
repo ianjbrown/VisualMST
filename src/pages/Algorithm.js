@@ -7,12 +7,14 @@ import {
   useHistory,
   Redirect,
 } from "react-router-dom";
+import fs from "fs";
 import Graph from "../datastructures/Graph";
 import NewGraphForm from "../components/algorithms/NewGraphForm";
 import UploadGraphForm from "../components/algorithms/UploadGraphForm";
 import VisualisationPage from "./Visualisation";
 import StartingVertexForm from "../components/algorithms/StartingVertexForm";
-import MainNavigaton from "../components/layout/MainNavigation";
+import MainNavigation from "../components/layout/MainNavigation";
+import { Container } from "react-bootstrap";
 
 function AlgorithmPage(props) {
   const [noOfVertices, setNoOfVertices] = useState();
@@ -45,22 +47,47 @@ function AlgorithmPage(props) {
   function selectVertexNoHandler(enteredVertexNo) {
     setNoOfVertices(enteredVertexNo);
     if (algorithmId === "kruskal-generate") {
-      var g = new Graph(enteredVertexNo);
-      g.generateGraph();
-      setSelectedGraph(g);
-      setSelectedMSTGraph(g.kruskal());
-      history.replace("/algorithms/" + algorithmId + "/visualisation");
+      var filename = enteredVertexNo + ".txt";
+      var rawFile = new XMLHttpRequest();
+      rawFile.open("GET", "/text/" + filename, false);
+      rawFile.onreadystatechange = () => {
+        if (rawFile.readyState === 4) {
+          if (rawFile.status === 200 || rawFile.status == 0) {
+            var allText = rawFile.responseText;
+            var lines = allText.split(/[\r\n]+/g);
+            var g = new Graph(enteredVertexNo);
+            g.generateGraph(lines);
+            setSelectedGraph(g);
+            setSelectedMSTGraph(g.kruskal());
+            history.replace("/algorithms/" + algorithmId + "/visualisation");
+          }
+        }
+      };
+      rawFile.send(null);
     }
   }
 
   function selectStartingHandler(enteredVertexNo) {
     setStartingVertex(enteredVertexNo);
     if (algorithmId === "prim-generate") {
-      var g = new Graph(noOfVertices);
-      g.generateGraph();
-      setSelectedGraph(g);
-      setSelectedMSTGraph(g.prim(enteredVertexNo));
-      history.replace("/algorithms/" + algorithmId + "/visualisation");
+      var filename = noOfVertices + ".txt";
+      var rawFile = new XMLHttpRequest();
+      rawFile.open("GET", "/text/" + filename, false);
+      console.log("HELLO");
+      rawFile.onreadystatechange = () => {
+        if (rawFile.readyState === 4) {
+          if (rawFile.status === 200 || rawFile.status == 0) {
+            var allText = rawFile.responseText;
+            var lines = allText.split(/[\r\n]+/g);
+            var g = new Graph(noOfVertices);
+            g.generateGraph(lines);
+            setSelectedGraph(g);
+            setSelectedMSTGraph(g.prim(enteredVertexNo));
+            history.replace("/algorithms/" + algorithmId + "/visualisation");
+          }
+        }
+      };
+      rawFile.send(null);
     }
   }
 
@@ -102,30 +129,33 @@ function AlgorithmPage(props) {
     <div>
       <Switch>
         <Route exact path={`${match.path}/visualisation`}>
-          <h1>{algName}</h1>
-          <VisualisationPage
-            graph={selectedGraph}
-            MSTGraph={selectedMSTGraph}
-            algName={algName}
-            startingVertex={startingVertex}
-          />
-        </Route>
-        <Route path={match.path}>
-          <MainNavigaton />
-          <h1>{algName}</h1>
-          <NewGraphForm onSubmit={selectVertexNoHandler} />
-          {algName === "Prim's Algorithm" && noOfVertices && (
-            <StartingVertexForm
-              noOfVertices={noOfVertices}
-              onSubmit={selectStartingHandler}
+            <h2 className="pt-2">{algName}</h2>
+            <VisualisationPage
+              graph={selectedGraph}
+              MSTGraph={selectedMSTGraph}
+              algName={algName}
+              startingVertex={startingVertex}
             />
-          )}
+        </Route>
 
-          {(algorithmId === "kruskal-import" ||
-            algorithmId === "prim-import") &&
-            noOfVertices && (
-              <UploadGraphForm onUploadGraph={uploadGraphHandler} />
+        <Route path={match.path}>
+          <MainNavigation />
+          <Container className="pt-5">
+            <h1>{algName}</h1>
+            <NewGraphForm algName={algName} onSubmit={selectVertexNoHandler} />
+            {algName === "Prim's Algorithm" && (
+              <StartingVertexForm
+                noOfVertices={noOfVertices}
+                onSubmit={selectStartingHandler}
+              />
             )}
+
+            {(algorithmId === "kruskal-import" ||
+              algorithmId === "prim-import") &&
+              noOfVertices && (
+                <UploadGraphForm onUploadGraph={uploadGraphHandler} />
+              )}
+          </Container>
         </Route>
       </Switch>
     </div>

@@ -1,10 +1,11 @@
-import classes from "./Layout.module.css";
+import React from 'react';
+import Container from 'react-bootstrap/Container';
 
 function Layout(props) {
   return (
-    <div>
-      <main className={classes.main}>{props.children}</main>
-    </div>
+    <Container fluid>
+      {props.children}
+    </Container>
   );
 }
 

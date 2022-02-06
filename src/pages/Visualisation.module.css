@@ -5,17 +5,17 @@
   top: 75px;
   font-size: xx-large;
   text-align: center;
-  color: #34568b;
+  color: blue;
 }
 
 .canvasDiv {
   position: fixed;
-  left: 350px;
+  left: 10px;
   right: 950px;
   top: 130px;
   bottom: 80px;
   z-index: 1;
-  background-color: Black;
+  background-color: #fff;
 }
 
 .canvasStyle {
@@ -29,12 +29,14 @@
 
 .infoPanel {
   padding-left: 10px;
-  position: fixed;
+  padding-right: 10px;
+  position: absolute;
+  overflow: hidden;
   left: 1430px;
   right: 40px;
   top: 130px;
   bottom: 80px;
-  background-color: #a8a8ff;
+  background-color: orange;
 }
 
 .infoPanel ul {
@@ -43,20 +45,13 @@
   padding-left: 6px;
 }
 
-.infoPanel ul li:nth-child(1) {
-  display: inline-block;
-  background: #898989;
-  font-weight: bold;
-  color: orange;
-}
-
 .infoPanel ol {
   margin-top: 2px;
   padding-left: 25px;
 }
 
 .infoPanel ol li:nth-child(1) {
-  color: #ff0000;
+  color: blue;
 }
 
 .infoPanelTab {
@@ -66,26 +61,21 @@
   right: 5px;
   top: 130px;
   bottom: 80px;
-  background-color: #a8a8ff;
+  background-color: orange;
 }
 
 .edgesQueue {
   position: fixed;
-  /* top: 370px;
-  bottom: 535px;
-  left: 990px;
-  right: 650px; */
+  top: 560px;
+
 }
 
 .edgesQueueList {
   padding-right: 25px;
   position: fixed;
   overflow: scroll;
-  top: 445px;
-  bottom: 325px;
-  /*
-  left: 1000px;
-  right: 350px; */
+  top: 610px;
+  bottom: 115px;
 }
 
 .edgesQueueList::-webkit-scrollbar {
@@ -93,7 +83,7 @@
 }
 
 .edgesQueueList::-webkit-scrollbar-track {
-  background: #a8a8ff;
+  background: orange;
 }
 
 .edgesQueueList::-webkit-scrollbar-thumb {
@@ -105,11 +95,11 @@
 }
 
 .edgesQueueList::-webkit-scrollbar-corner {
-  background: #a8a8ff;
+  background: orange;
 }
 
-.disjointSets {
+/* .disjointSets {
   position: fixed;
-  top: 635px;
-  bottom: 300px;
-}
+  top: 705px;
+  bottom: 300px; */
+

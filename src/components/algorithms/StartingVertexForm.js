@@ -1,6 +1,6 @@
 import { useRef } from "react";
+import { Form, Button } from "react-bootstrap";
 
-import classes from "./NewGraphForm.module.css";
 
 function StartingVertexForm(props) {
   const startingVertexRef = useRef();
@@ -11,10 +11,10 @@ function StartingVertexForm(props) {
     props.onSubmit(startingVertexNo);
   }
   return (
-    <form className={classes.form}>
-      <div className={classes.control}>
-        <label>Select Starting Vertex</label>
-        <input
+    <Form onSubmit={submitHandler}>
+      <Form.Group>
+        <Form.Label>Select Starting Vertex</Form.Label>
+        <Form.Control
           type="number"
           min={0}
           max={props.noOfVertices - 1}
@@ -22,11 +22,12 @@ function StartingVertexForm(props) {
           id="startingvertex"
           ref={startingVertexRef}
         />
-        <div className={classes.actions}>
-          <button onClick={submitHandler}>Confirm</button>
-        </div>
-      </div>
-    </form>
+
+        <Button className="mt-2" variant="primary" type="submit">
+          Confirm
+        </Button>
+      </Form.Group>
+    </Form>
   );
 }
 

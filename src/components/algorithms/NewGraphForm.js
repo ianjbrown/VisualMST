@@ -1,6 +1,5 @@
 import { useRef } from "react";
-
-import classes from "./NewGraphForm.module.css";
+import { Form, Button } from "react-bootstrap";
 
 function NewGraphForm(props) {
   const verticesInputRef = useRef();
@@ -12,22 +11,21 @@ function NewGraphForm(props) {
   }
 
   return (
-    <form className={classes.form} onSubmit={submitHandler}>
-      <div className={classes.control}>
-        <label>Number of Vertices</label>
-        <input
+    <Form onSubmit={submitHandler}>
+      <Form.Group>
+        <Form.Label>Number of Vertices</Form.Label>
+        <Form.Control
           type="number"
-          min="5"   
-          max="15"
+          min="5"
+          max="10"
           required
           id="vertices"
           ref={verticesInputRef}
         />
-      </div>
-      <div className={classes.actions}>
-          <button>Generate Graph</button>
-      </div>
-    </form>
+
+        <Button className="mt-2" variant="primary" type="submit">Generate Graph</Button>
+      </Form.Group>
+    </Form>
   );
 }
 

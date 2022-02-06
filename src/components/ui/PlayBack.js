@@ -1,35 +1,27 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 import classes from "./PlayBack.module.css";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
 import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import Slider from "@mui/material/Slider";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 function PlayBack(props) {
-  const [Paused, setPaused] = useState(true);
   const [backgroundOn, setBackgroundOn] = useState(true);
+  const [firstStepShow, setFirstStepShow] = useState(false);
+  const firstStep = useRef(null);
 
-  let playPause;
-  if (Paused) {
-    playPause = (
-      <PlayArrowIcon sx={{ fontSize: 60 }} onClick={playPauseHandler} />
-    );
-  } else {
-    playPause = (
-      <PauseOutlinedIcon sx={{ fontSize: 60 }} onClick={playPauseHandler} />
-    );
-  }
+  // const [timeout, setTimeout] = useState(1000);
 
   let toggle;
   let toggleText;
   if (backgroundOn) {
     toggle = (
       <ToggleOffOutlinedIcon
-        sx={{ fontSize: 60 }}
+        sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
         onClick={toggleBackgroundGraph}
       ></ToggleOffOutlinedIcon>
     );
@@ -37,13 +29,18 @@ function PlayBack(props) {
   } else {
     toggle = (
       <ToggleOnOutlinedIcon
-        sx={{ fontSize: 60 }}
+        sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
         onClick={toggleBackgroundGraph}
         color="success"
       ></ToggleOnOutlinedIcon>
     );
     toggleText = "Show Original Graph";
   }
+
+  const timeoutHandler = (event, newValue) => {
+    console.log(newValue);
+    props.onTimeoutChange(newValue);
+  };
 
   function firstHandler() {
     props.onFirst();
@@ -61,11 +58,6 @@ function PlayBack(props) {
     props.onLast();
   }
 
-  function playPauseHandler() {
-    props.onPlayPause(!Paused);
-    setPaused(!Paused);
-  }
-
   function toggleBackgroundGraph() {
     props.onToggleBackgroundGraph(!backgroundOn);
     setBackgroundOn(!backgroundOn);
@@ -73,19 +65,101 @@ function PlayBack(props) {
 
   return (
     <div className={classes.bar}>
-      <FirstPageIcon sx={{ fontSize: 60 }} onClick={firstHandler} />
-      <ArrowBackIosNewOutlinedIcon
-        sx={{ fontSize: 50 }}
-        onClick={backHandler}
-      />
-      {playPause}
-      <ArrowForwardIosOutlinedIcon
-        sx={{ fontSize: 50 }}
-        onClick={forwardHandler}
-      />
-      <LastPageIcon sx={{ fontSize: 60 }} onClick={lastHandler} />
-      
-      <div className={classes.barToggle}>{toggle}</div>
+      <div className={classes.slowText}>Slow</div>
+      <div className={classes.fastText}>Fast</div>
+      <div className={classes.setSpeed}>
+        <Slider
+          aria-label="Speed"
+          defaultValue={1000}
+          valueLabelDisplay="auto"
+          valueLabelFormat={(value) => <div>Speed: {value / 200}</div>}
+          step={100}
+          marks
+          min={100}
+          max={2000}
+          onChangeCommitted={timeoutHandler}
+        />
+      </div>
+      <OverlayTrigger
+        placement={"top"}
+        overlay={
+          <Tooltip id={`tooltip-top`}>
+            <strong>First Step</strong>
+          </Tooltip>
+        }
+      >
+        <FirstPageIcon
+          ref={firstStep}
+          onHover={() => setFirstStepShow(!firstStepShow)}
+          sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
+          onClick={firstHandler}
+        />
+      </OverlayTrigger>
+
+      <OverlayTrigger
+        placement={"top"}
+        overlay={
+          <Tooltip id={`tooltip-top`}>
+            <strong>Previous Step</strong>
+          </Tooltip>
+        }
+      >
+        <ArrowBackIosNewOutlinedIcon
+          sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
+          onClick={backHandler}
+        />
+      </OverlayTrigger>
+      <OverlayTrigger
+        placement={"top"}
+        overlay={
+          <Tooltip id={`tooltip-top`}>
+            <strong>{props.symbolToolTip}</strong>
+          </Tooltip>
+        }
+      >
+        {props.symbol}
+      </OverlayTrigger>
+
+      <OverlayTrigger
+        placement={"top"}
+        overlay={
+          <Tooltip id={`tooltip-top`}>
+            <strong>Next Step</strong>
+          </Tooltip>
+        }
+      >
+        <ArrowForwardIosOutlinedIcon
+          sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
+          onClick={forwardHandler}
+        />
+      </OverlayTrigger>
+
+      <OverlayTrigger
+        placement={"top"}
+        overlay={
+          <Tooltip id={`tooltip-top`}>
+            <strong>Final Step</strong>
+          </Tooltip>
+        }
+      >
+        <LastPageIcon
+          sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
+          onClick={lastHandler}
+        />
+      </OverlayTrigger>
+
+      <OverlayTrigger
+        placement={"top"}
+        overlay={
+          <Tooltip id={`tooltip-top`}>
+            <strong>
+              Hide the original graph edges
+            </strong>
+          </Tooltip>
+        }
+      >
+        <div className={classes.barToggle}>{toggle}</div>
+      </OverlayTrigger>
       <div className={classes.barToggleText}>{toggleText}</div>
     </div>
   );

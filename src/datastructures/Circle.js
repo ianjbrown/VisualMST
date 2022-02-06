@@ -10,7 +10,7 @@ class Circle {
   draw(ctx) {
     ctx.beginPath();
     ctx.fillStyle = this.colour;
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = "#fff";
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     ctx.fill();
     ctx.stroke();

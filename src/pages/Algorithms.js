@@ -3,6 +3,7 @@ import AlgorithmPage from "./Algorithm";
 import AlgorithmList from "../components/algorithms/AlgorithmList";
 import Graph from "../datastructures/Graph";
 import MainNavigation from "../components/layout/MainNavigation";
+import { Container } from "react-bootstrap";
 
 function AlgorithmsPage() {
   var g = new Graph();
@@ -12,7 +13,7 @@ function AlgorithmsPage() {
       id: "kruskal",
       title: "Kruskal's algorithm",
       description:
-        "Kruskal's algorithm finds a minimum spanning Tree of an connected undirected edge-weighted graph. It first appeared in 1956 and was written by Joesph Kruskal ",
+        "Kruskal's algorithm finds a minimum spanning tree of an connected undirected edge-weighted graph. It first appeared in 1956 and was written by Joesph Kruskal. ",
       steps: (
         <ol>
           <li>Sort the edges by their weight in non-decreasing order.</li>
@@ -32,7 +33,7 @@ function AlgorithmsPage() {
       id: "prim",
       title: "Prim's algorithm",
       description:
-        "Prim's algorithm finds a minimum spanning Tree of an connected undirected edge-weighted graph. It was first developed by Vojtěch Jarník in 1930 and was rediscovered and republished by Robert C. Prim in 1957. ",
+        "Prim's algorithm finds a minimum spanning tree of an connected undirected edge-weighted graph. It was first developed by Vojtěch Jarník in 1930 and was rediscovered and republished by Robert C. Prim in 1957. ",
       steps: (
         <ol>
           <li>
@@ -67,12 +68,14 @@ function AlgorithmsPage() {
   return (
     <div>
       <Switch>
-        <Route path={`${match.path}/:algorithmId`}>
-          <AlgorithmPage algorithms={algorithmsData}/>
+        <Route path={`${match.path}/:algorithmId`} algorithms={algorithmsData}>
+          <AlgorithmPage />
         </Route>
         <Route exact path={match.path}>
-          <MainNavigation/>
-          <AlgorithmList algorithms={algorithmsData} />
+          <MainNavigation />
+          <Container className="pt-5">
+            <AlgorithmList algorithms={algorithmsData} />
+          </Container>
         </Route>
       </Switch>
     </div>

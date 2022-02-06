@@ -1,6 +1,5 @@
 import { useState } from "react";
-
-import classes from "./NewGraphForm.module.css";
+import { Form, Button } from "react-bootstrap";
 
 function UploadGraphForm(props) {
   const [selectedFile, setSelectedFile] = useState();
@@ -14,22 +13,15 @@ function UploadGraphForm(props) {
     props.onUploadGraph(selectedFile);
   }
 
-
-  
   return (
-    <form className={classes.form} onSubmit={submitHandler}>
-      <div className={classes.control}>
-        <label>Graph File</label>
-        <input
-          type="file"
-          name="file"
-          onChange={changeHandler}
-        />
-      </div>
-      <div className={classes.actions}>
-        <button>Import Graph</button>
-      </div>
-    </form>
+    <Form onSubmit={submitHandler}>
+      <Form.Group>
+        <Form.Label>Graph File</Form.Label>
+        <Form.Control type="file" name="file" onChange={changeHandler} />
+
+        <Button className="mt-2" variant="primary" type="submit">Import Graph</Button>
+      </Form.Group>
+    </Form>
   );
 }
 

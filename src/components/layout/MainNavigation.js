@@ -1,32 +1,24 @@
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-
-import classes from "./MainNavigation.module.css";
-
+import React from "react";
+import { Navbar, Nav, Container } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 function MainNavigaton() {
-  const history = useHistory();
-
-  function clickHandler() {
-    history.replace("/");
-  }
-
   return (
-    <header className={classes.header}>
-      <div className={classes.logo} onClick={clickHandler}>
-        Visualising MST algorithms
-      </div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/algorithms">Algorithms</Link>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <Navbar bg="light" variant="light" expand="lg">
+      <Container>
+        <LinkContainer to="/">
+          <Navbar.Brand>Visualising MST Algorithms</Navbar.Brand>
+        </LinkContainer>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ml-auto">
+            <LinkContainer to="/algorithms">
+              <Nav.Link>The Algorithms</Nav.Link>
+            </LinkContainer>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 

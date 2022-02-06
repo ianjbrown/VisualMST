@@ -1,8 +1,15 @@
+.setSpeed {
+  position: absolute;
+  top: 25px;
+  left: 100px;
+  right: 1600px;
+}
+
 .bar {
   font: inherit;
-  padding-left: 850px;
-  background-color: #D9D9D6;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background-color: #d9d9d6;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -15,16 +22,29 @@
   left: 1550px;
   top: 5px;
   position: absolute;
-  z-index: 1;
 }
 
 .barToggleText {
   left: 1618px;
-  top:25px;
+  top: 25px;
   position: absolute;
-  z-index: 1;
   font-weight: bold;
 }
+
+.fastText {
+  left: 335px;
+  top: 25px;
+  position: absolute;
+  font-weight: bold;
+}
+
+.slowText {
+  left: 35px;
+  top: 25px;
+  position: absolute;
+  font-weight: bold;
+}
+/* }
 .actions {
     margin-top: 1rem;
     text-align: right;
@@ -45,4 +65,4 @@
   .actions button:active {
     background-color: #111111;
     border-color: #000000;
-  }
+  }  */
