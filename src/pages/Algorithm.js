@@ -5,22 +5,21 @@ import {
   Switch,
   Route,
   useHistory,
-  Redirect,
 } from "react-router-dom";
-import fs from "fs";
 import Graph from "../datastructures/Graph";
 import NewGraphForm from "../components/algorithms/NewGraphForm";
 import UploadGraphForm from "../components/algorithms/UploadGraphForm";
 import VisualisationPage from "./Visualisation";
 import StartingVertexForm from "../components/algorithms/StartingVertexForm";
 import MainNavigation from "../components/layout/MainNavigation";
-import { Container } from "react-bootstrap";
+import { Container, Alert } from "react-bootstrap";
 
 function AlgorithmPage(props) {
   const [noOfVertices, setNoOfVertices] = useState();
   const [startingVertex, setStartingVertex] = useState();
   const [selectedGraph, setSelectedGraph] = useState();
   const [selectedMSTGraph, setSelectedMSTGraph] = useState();
+  const [importError, setImportError] = useState(false);
 
   const match = useRouteMatch();
   const history = useHistory();
@@ -52,7 +51,7 @@ function AlgorithmPage(props) {
       rawFile.open("GET", "/text/" + filename, false);
       rawFile.onreadystatechange = () => {
         if (rawFile.readyState === 4) {
-          if (rawFile.status === 200 || rawFile.status == 0) {
+          if (rawFile.status === 200 || rawFile.status === 0) {
             var allText = rawFile.responseText;
             var lines = allText.split(/[\r\n]+/g);
             var g = new Graph(enteredVertexNo);
@@ -76,7 +75,7 @@ function AlgorithmPage(props) {
       console.log("HELLO");
       rawFile.onreadystatechange = () => {
         if (rawFile.readyState === 4) {
-          if (rawFile.status === 200 || rawFile.status == 0) {
+          if (rawFile.status === 200 || rawFile.status === 0) {
             var allText = rawFile.responseText;
             var lines = allText.split(/[\r\n]+/g);
             var g = new Graph(noOfVertices);
@@ -106,10 +105,12 @@ function AlgorithmPage(props) {
       var g = new Graph(noOfVertices);
       g.importGraph(graphLines);
       if (!g.isConnected(0)) {
-        alert(
-          "Error, imported graph is not connected, please edit input file and add edges accordingly."
-        );
+        setImportError(true);
         return history.replace("/algorithms/" + algorithmId);
+        // alert(
+        //   "Error, imported graph is not connected, please edit input file and add edges accordingly."
+        // );
+        // return history.replace("/algorithms/" + algorithmId);
       }
 
       setSelectedGraph(g);
@@ -129,19 +130,24 @@ function AlgorithmPage(props) {
     <div>
       <Switch>
         <Route exact path={`${match.path}/visualisation`}>
-            <h2 className="pt-2">{algName}</h2>
-            <VisualisationPage
-              graph={selectedGraph}
-              MSTGraph={selectedMSTGraph}
-              algName={algName}
-              startingVertex={startingVertex}
-            />
+          <VisualisationPage
+            graph={selectedGraph}
+            MSTGraph={selectedMSTGraph}
+            algName={algName}
+            startingVertex={startingVertex}
+          />
         </Route>
 
         <Route path={match.path}>
           <MainNavigation />
-          <Container className="pt-5">
+          <Container className="pt-5" style={{ maxWidth: "700px" }}>
             <h1>{algName}</h1>
+            {importError && (
+              <Alert variant="danger" dismissable>
+                Error, imported graph is not connected, please edit input file
+                and add edges accordingly.
+              </Alert>
+            )}
             <NewGraphForm algName={algName} onSubmit={selectVertexNoHandler} />
             {algName === "Prim's Algorithm" && (
               <StartingVertexForm

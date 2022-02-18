@@ -23,7 +23,7 @@ function NewGraphForm(props) {
           ref={verticesInputRef}
         />
 
-        <Button className="mt-2" variant="primary" type="submit">Generate Graph</Button>
+        <Button className="mt-2" variant="primary" type="submit">Submit</Button>
       </Form.Group>
     </Form>
   );

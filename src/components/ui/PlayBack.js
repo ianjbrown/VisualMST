@@ -1,18 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import classes from "./PlayBack.module.css";
-import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
-import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
 import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
-import FirstPageIcon from "@mui/icons-material/FirstPage";
-import LastPageIcon from "@mui/icons-material/LastPage";
+import TooltipIcon from "./TooltipIcon";
+
 import Slider from "@mui/material/Slider";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
 
 function PlayBack(props) {
   const [backgroundOn, setBackgroundOn] = useState(true);
-  const [firstStepShow, setFirstStepShow] = useState(false);
-  const firstStep = useRef(null);
 
   // const [timeout, setTimeout] = useState(1000);
 
@@ -64,11 +60,10 @@ function PlayBack(props) {
   }
 
   return (
-    <div className={classes.bar}>
-      <div className={classes.slowText}>Slow</div>
-      <div className={classes.fastText}>Fast</div>
-      <div className={classes.setSpeed}>
-        <Slider
+    <>
+      <Col xs={3} className={classes.bar}>
+        <div className={classes.barText}>Slow</div>
+        <Slider className={classes.slider}
           aria-label="Speed"
           defaultValue={1000}
           valueLabelDisplay="auto"
@@ -79,89 +74,34 @@ function PlayBack(props) {
           max={2000}
           onChangeCommitted={timeoutHandler}
         />
-      </div>
-      <OverlayTrigger
-        placement={"top"}
-        overlay={
-          <Tooltip id={`tooltip-top`}>
-            <strong>First Step</strong>
-          </Tooltip>
-        }
-      >
-        <FirstPageIcon
-          ref={firstStep}
-          onHover={() => setFirstStepShow(!firstStepShow)}
-          sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
-          onClick={firstHandler}
+        <div className={classes.barText}>Fast</div>
+        
+      </Col>
+      <Col xs={6} className={classes.bar}>
+        <TooltipIcon id="first" firstHandler={firstHandler} />
+        <TooltipIcon id="back" backHandler={backHandler} />
+        <TooltipIcon
+          id="play"
+          symbolToolTip={props.symbolToolTip}
+          symbol={props.symbol}
         />
-      </OverlayTrigger>
-
-      <OverlayTrigger
-        placement={"top"}
-        overlay={
-          <Tooltip id={`tooltip-top`}>
-            <strong>Previous Step</strong>
-          </Tooltip>
-        }
-      >
-        <ArrowBackIosNewOutlinedIcon
-          sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
-          onClick={backHandler}
-        />
-      </OverlayTrigger>
-      <OverlayTrigger
-        placement={"top"}
-        overlay={
-          <Tooltip id={`tooltip-top`}>
-            <strong>{props.symbolToolTip}</strong>
-          </Tooltip>
-        }
-      >
-        {props.symbol}
-      </OverlayTrigger>
-
-      <OverlayTrigger
-        placement={"top"}
-        overlay={
-          <Tooltip id={`tooltip-top`}>
-            <strong>Next Step</strong>
-          </Tooltip>
-        }
-      >
-        <ArrowForwardIosOutlinedIcon
-          sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
-          onClick={forwardHandler}
-        />
-      </OverlayTrigger>
-
-      <OverlayTrigger
-        placement={"top"}
-        overlay={
-          <Tooltip id={`tooltip-top`}>
-            <strong>Final Step</strong>
-          </Tooltip>
-        }
-      >
-        <LastPageIcon
-          sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
-          onClick={lastHandler}
-        />
-      </OverlayTrigger>
-
-      <OverlayTrigger
-        placement={"top"}
-        overlay={
-          <Tooltip id={`tooltip-top`}>
-            <strong>
-              Hide the original graph edges
-            </strong>
-          </Tooltip>
-        }
-      >
-        <div className={classes.barToggle}>{toggle}</div>
-      </OverlayTrigger>
-      <div className={classes.barToggleText}>{toggleText}</div>
-    </div>
+        <TooltipIcon id="forward" forwardHandler={forwardHandler} />
+        <TooltipIcon id="last" lastHandler={lastHandler} />
+      </Col>
+      <Col xs={3} className={classes.bar}>
+        <OverlayTrigger
+          placement={"top"}
+          overlay={
+            <Tooltip id={`tooltip-top`}>
+              <strong>Hide the original graph edges</strong>
+            </Tooltip>
+          }
+        >
+          <div className={classes.barToggle}>{toggle}</div>
+        </OverlayTrigger>
+        <div className={classes.barText}>{toggleText}</div>
+      </Col>
+    </>
   );
 }
 

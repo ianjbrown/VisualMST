@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, createContext } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 
@@ -11,31 +11,30 @@ import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutl
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
+import { Row } from "react-bootstrap";
 
 function PrimVisualisationPage(props) {
   const [algorithmState, setAlgorithmState] = useState(0);
   const [algorithmStep, setAlgorithmStep] = useState(0);
-  const [edgesQueueStages, setEdgesQueueStages] = useState(
-    JSON.parse(JSON.stringify(props.MSTGraph[2]))
-  );
-  const [edgesQueueRemoved, setEdgesQueueRemoved] = useState([]);
   const [backgroundOn, setBackgroundOn] = useState(true);
   const [Paused, setPaused] = useState(true);
   const [Expanded, setExpanded] = useState(true);
   const [inverseSpeed, setInverseSpeed] = useState(1000);
 
+  const edgesQueueStages = JSON.parse(JSON.stringify(props.MSTGraph[2]));
+
   const expandInfo = useSpring({
     opacity: Expanded ? 1 : 0,
-    marginLeft: Expanded ? 0 : 1000,
+    marginLeft: Expanded ? 0 : 470,
   });
   const expandCanvas = useSpring({
-    left: Expanded ? "10px" : "285px",
-    right: Expanded ? "500px" : "305px",
-    scale: Expanded ? (1, 1) : (1, 1),
+    left: Expanded ? "10px" : "305px",
+    right: Expanded ? "500px" : "245px",
+    // scale: Expanded ? (1, 1) : (1, 1),
   });
-  const fadeMessage = useSpring({
-    opacity: 0,
-  });
+  // const fadeMessage = useSpring({
+  //   opacity: 0,
+  // });
 
   const notInitialRender = useRef(false);
 
@@ -55,14 +54,17 @@ function PrimVisualisationPage(props) {
   }
 
   let playPause;
+  let playPauseToolTip;
   if (Paused) {
     playPause = (
       <PlayArrowIcon sx={{ fontSize: 60 }} onClick={playPauseHandler} />
     );
+    playPauseToolTip = "Play Visualisation";
   } else {
     playPause = (
       <PauseOutlinedIcon sx={{ fontSize: 60 }} onClick={playPauseHandler} />
     );
+    playPauseToolTip = "Pause Visualisation";
   }
 
   let circles = [];
@@ -73,9 +75,7 @@ function PrimVisualisationPage(props) {
   console.log(algorithmStep);
   let minWeight = MSTGraph[4];
   let edgesQStages = edgesQueueStages;
-  console.log(edgesQStages);
   let edgesQ = Object.assign([], edgesQStages[algorithmStep]);
-  let edgesQRemoved = edgesQueueRemoved;
   let edgesQueuePrint;
   if (typeof edgesQ != "undefined") {
     edgesQueuePrint = edgesQ.map((edge) => (
@@ -120,13 +120,11 @@ function PrimVisualisationPage(props) {
 
   function edgeInMST(edge) {
     let found;
-    // console.log(edge);
-    // console.log(MSTGraph[1][0]);
     MSTGraph[1].forEach((MSTEdge) => {
       if (
-        edge[0] === MSTEdge[0] &&
-        edge[1] === MSTEdge[1] &&
-        edge[2] === MSTEdge[2]
+        edge.elem[0] === MSTEdge[0] &&
+        edge.elem[1] === MSTEdge[1] &&
+        edge.prio === MSTEdge[2]
       ) {
         found = true;
       }
@@ -138,16 +136,16 @@ function PrimVisualisationPage(props) {
     const canvas = canvasRef.current;
     const canvas2 = canvasRef2.current;
 
-    canvas.width = window.innerWidth * (5 / 8);
+    canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    canvas2.width = window.innerWidth * (5 / 8);
+    canvas2.width = window.innerWidth;
     canvas2.height = window.innerHeight;
 
     const ctx = canvas.getContext("2d");
     const ctx2 = canvas2.getContext("2d");
 
-    ctx.scale(1.5, 2.1);
-    ctx2.scale(1.5, 2.1);
+    ctx.scale(2.2, 2.1);
+    ctx2.scale(2.2, 2.1);
 
     ctx.lineCap = "round";
     ctx2.lineCap = "round";
@@ -170,13 +168,11 @@ function PrimVisualisationPage(props) {
     const ctx = canvas.getContext("2d");
     for (var i = 0; i < graph.noOfVertices; i++) {
       let colour;
-      console.log(algorithmStep);
-      console.log(MSTGraph[3]);
       if (MSTGraph[3][algorithmStep].includes(i)) colour = "orange";
       else colour = "black";
       var circle = new Circle(
-        360 + 320 * Math.cos((i * 2 * Math.PI) / graph.noOfVertices),
-        230 + 200 * Math.sin((i * 2 * Math.PI) / graph.noOfVertices),
+        400 + 300 * Math.cos((i * 2 * Math.PI) / graph.noOfVertices),
+        235 + 200 * Math.sin((i * 2 * Math.PI) / graph.noOfVertices),
         i,
         colour
       );
@@ -184,6 +180,17 @@ function PrimVisualisationPage(props) {
       circles.push(circle);
     }
     return circles;
+  }
+
+  function drawLegend() {
+    const canvas = canvasRef2.current;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "black";
+    ctx.fillText("Visited:", 600, 50);
+    ctx.fillText("Unvisited:", 600, 65);
+    ctx.fillRect(657, 56, 10, 10);
+    ctx.fillStyle = "orange";
+    ctx.fillRect(645, 41, 10, 10);
   }
 
   function drawEdgeWeights(p1, p2, weight, colour) {
@@ -229,6 +236,7 @@ function PrimVisualisationPage(props) {
         drawEdgeWeights(currentCircle, adjacentCircle, j.weight, "lightgrey");
       }
     }
+    drawLegend();
   }
 
   function graphStep(MSTGraph) {
@@ -238,16 +246,16 @@ function PrimVisualisationPage(props) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
     drawCircles();
     if (backgroundOn) drawGraph(graph.AdjList);
+    drawLegend();
     var steps = MSTGraph[5];
     for (var i = 0; i < algorithmStep; i++) {
       var step = steps[i];
-      // console.log(step);
-      var p1 = step[0];
-      var p2 = step[1];
-      var weight = step[2];
+      console.log(step);
+      var p1 = step.elem[0];
+      var p2 = step.elem[1];
+      var weight = step.prio;
 
       var fillStyle = edgeInMST(step) ? "orange" : "lightgrey";
       ctx.strokeStyle = edgeInMST(step) ? "orange" : "lightgrey";
@@ -259,7 +267,7 @@ function PrimVisualisationPage(props) {
       drawEdgeWeights(circles[p1], circles[p2], weight, fillStyle);
     }
     if (algorithmState === 1) {
-      for (var i = 0; i < edgesQ.length; i++) {
+      for (i = 0; i < edgesQ.length; i++) {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
@@ -275,7 +283,7 @@ function PrimVisualisationPage(props) {
       }
     }
     if (algorithmState === 2) {
-      for (var i = 0; i < edgesQ.length; i++) {
+      for (i = 0; i < edgesQ.length; i++) {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
@@ -292,7 +300,7 @@ function PrimVisualisationPage(props) {
     }
 
     if (algorithmState === 3) {
-      for (var i = 1; i < edgesQ.length; i++) {
+      for (i = 1; i < edgesQ.length; i++) {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
@@ -322,7 +330,7 @@ function PrimVisualisationPage(props) {
     }
 
     if (algorithmState === 4) {
-      for (var i = 1; i < edgesQ.length; i++) {
+      for (i = 1; i < edgesQ.length; i++) {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
@@ -351,7 +359,7 @@ function PrimVisualisationPage(props) {
       );
     }
     if (algorithmState === 5) {
-      for (var i = 1; i < edgesQ.length; i++) {
+      for (i = 1; i < edgesQ.length; i++) {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
@@ -382,7 +390,7 @@ function PrimVisualisationPage(props) {
       circles[edgesQ[0].elem[1]].draw(ctx);
     }
     if (algorithmState === 6) {
-      for (var i = 0; i < edgesQ.length; i++) {
+      for (i = 0; i < edgesQ.length; i++) {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
@@ -411,7 +419,7 @@ function PrimVisualisationPage(props) {
       );
     }
     if (algorithmState === 7) {
-      for (var i = 1; i < edgesQ.length; i++) {
+      for (i = 1; i < edgesQ.length; i++) {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
@@ -449,9 +457,7 @@ function PrimVisualisationPage(props) {
     if (!Paused) return;
     setAlgorithmStep(0);
     setAlgorithmState(0);
-    edgesQRemoved = [];
     edgesQ = JSON.parse(JSON.stringify(props.MSTGraph[2][0]));
-    setEdgesQueueRemoved(edgesQRemoved);
   }
 
   function backHandler() {
@@ -459,24 +465,19 @@ function PrimVisualisationPage(props) {
     if (algorithmState === 8) {
       setAlgorithmState(2);
     } else if (algorithmState === 2 && algorithmStep > 0) {
-      let unshiftEdge = edgesQRemoved[edgesQRemoved.length - 1];
-      if (
-        edgeInMST([unshiftEdge.elem[0], unshiftEdge.elem[1], unshiftEdge.prio])
-      ) {
-        edgesQRemoved.pop();
-        setEdgesQueueRemoved(edgesQRemoved);
+      let recoverEdge = MSTGraph[5][algorithmStep - 1];
+      edgesQ = edgesQStages[algorithmStep - 1];
+      setAlgorithmStep(algorithmStep - 1);
+      if (edgeInMST(recoverEdge)) {
         setAlgorithmState(5);
       } else {
         setAlgorithmState(7);
       }
-      edgesQ = edgesQStages[algorithmStep - 1];
-      setAlgorithmStep(algorithmStep - 1);
     } else if (algorithmState === 6) {
       setAlgorithmState(4);
     } else {
       setAlgorithmState(algorithmState - 1);
     }
-    // setAlgorithmState(algorithmState - 1);
   }
   function forwardStep() {
     if (algorithmState === 8) {
@@ -490,29 +491,18 @@ function PrimVisualisationPage(props) {
       algorithmState === 2 &&
       MSTGraph[3][algorithmStep].length === parseInt(graph.noOfVertices)
     ) {
-      // console.log("1");
-      console.log(MSTGraph);
       setAlgorithmState(8);
       setPaused(true);
-    } else if (
-      algorithmState === 4 &&
-      !edgeInMST([edgesQ[0].elem[0], edgesQ[0].elem[1], edgesQ[0].prio])
-    ) {
+    } else if (algorithmState === 4 && !edgeInMST(edgesQ[0])) {
       // console.log("2");
       setAlgorithmState(6);
-    } else if (
-      algorithmState === 4 &&
-      edgeInMST([edgesQ[0].elem[0], edgesQ[0].elem[1], edgesQ[0].prio])
-    ) {
+    } else if (algorithmState === 4 && edgeInMST(edgesQ[0])) {
       // console.log("HIIIIII");
       setAlgorithmState(algorithmState + 1);
     } else if (algorithmState === 5 || algorithmState === 7) {
       // console.log("3");
       setAlgorithmStep(algorithmStep + 1);
       setAlgorithmState(2);
-      edgesQRemoved.push(edgesQ[0]);
-      // edgesQ.shift();
-      setEdgesQueueRemoved(edgesQRemoved);
     } else {
       // console.log("4");
       setAlgorithmState(algorithmState + 1);
@@ -528,9 +518,7 @@ function PrimVisualisationPage(props) {
     if (!Paused) return;
     setAlgorithmStep(MSTGraph[5].length);
     setAlgorithmState(8);
-    edgesQRemoved = MSTGraph[5];
-    edgesQ = edgesQStages[edgesQStages.length];
-    setEdgesQueueRemoved(edgesQRemoved);
+    edgesQ = edgesQStages[edgesQStages.length - 1];
   }
 
   function toggleBackgoundGraphHandler(toggle) {
@@ -567,36 +555,39 @@ function PrimVisualisationPage(props) {
 
   return (
     <React.Fragment>
-      <Link to="/" className="btn btn-primary">
-        Exit
-      </Link>
-      {algorithmStateMessage}
+      <h2 className="pt-1">{props.algName}</h2>
+      <div className={classes.closeButton}>
+        <Link to="/" className="btn btn-close" />
+      </div>
+      <Row>{algorithmStateMessage}</Row>
+
       <animated.div className={classes.canvasDiv} style={expandCanvas}>
         <canvas className={classes.canvasStyle} ref={canvasRef2} />
         <canvas className={classes.canvasStyle} ref={canvasRef} />
       </animated.div>
+
       <div className={classes.infoPanelTab}>{expandArrow}</div>
       <animated.div className={classes.infoPanel} style={expandInfo}>
-        <div>
-          <h1>Pseudocode</h1>
-          <PseudoCode algName={props.algName} algorithmState={algorithmState} />
-        </div>
-        <div className={classes.edgesQueue}>
-          <h1>Edges Queue</h1>
-        </div>
+        <h1>Pseudocode</h1>
+        <PseudoCode algName={props.algName} algorithmState={algorithmState} />
+        <h1>Edges Queue</h1>
         <div className={classes.edgesQueueList}>
           <ol>{edgesQueuePrint}</ol>
         </div>
       </animated.div>
-      <PlayBack
-        symbol={playPause}
-        onTimeoutChange={timeoutHandler}
-        onFirst={firstHandler}
-        onBack={backHandler}
-        onForward={forwardHandler}
-        onLast={lastHandler}
-        onToggleBackgroundGraph={toggleBackgoundGraphHandler}
-      />
+
+      <Row className={classes.fixedRowBottom}>
+        <PlayBack
+          symbolToolTip={playPauseToolTip}
+          symbol={playPause}
+          onTimeoutChange={timeoutHandler}
+          onFirst={firstHandler}
+          onBack={backHandler}
+          onForward={forwardHandler}
+          onLast={lastHandler}
+          onToggleBackgroundGraph={toggleBackgoundGraphHandler}
+        />
+      </Row>
     </React.Fragment>
   );
 }

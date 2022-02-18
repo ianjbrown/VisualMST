@@ -1,12 +1,10 @@
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import AlgorithmPage from "./Algorithm";
 import AlgorithmList from "../components/algorithms/AlgorithmList";
-import Graph from "../datastructures/Graph";
 import MainNavigation from "../components/layout/MainNavigation";
 import { Container } from "react-bootstrap";
 
 function AlgorithmsPage() {
-  var g = new Graph();
   const match = useRouteMatch();
   const algorithmsData = [
     {
@@ -73,7 +71,7 @@ function AlgorithmsPage() {
         </Route>
         <Route exact path={match.path}>
           <MainNavigation />
-          <Container className="pt-5">
+          <Container className="pt-5" style={{ maxWidth:"700px"}}>
             <AlgorithmList algorithms={algorithmsData} />
           </Container>
         </Route>

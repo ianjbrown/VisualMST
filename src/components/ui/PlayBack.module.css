@@ -1,68 +1,31 @@
-.setSpeed {
-  position: absolute;
-  top: 25px;
-  left: 100px;
-  right: 1600px;
-}
-
 .bar {
-  font: inherit;
-  display: flex;
   justify-content: center;
+  display: flex;
   background-color: #d9d9d6;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: 75px;
-  width: 100%;
-  border: 1px solid #000000;
+  z-index: 1;
+  font-weight: bold;
 }
 
-.barToggle {
-  left: 1550px;
-  top: 5px;
-  position: absolute;
+.barText {
+  top: 20px;
+  position: relative;
+  display: flex;
+  font-weight: bold;
+  margin-right: 10px;
+  margin-left: 10px;
+  z-index: 1;
+}
+
+.slider {
+  top: 20px;
+  position: relative;
+  min-width: 100px;
+  z-index: 1;
 }
 
 .barToggleText {
-  left: 1618px;
-  top: 25px;
-  position: absolute;
+  display: flex;
+  top: 20px;
+  position: relative;
   font-weight: bold;
 }
-
-.fastText {
-  left: 335px;
-  top: 25px;
-  position: absolute;
-  font-weight: bold;
-}
-
-.slowText {
-  left: 35px;
-  top: 25px;
-  position: absolute;
-  font-weight: bold;
-}
-/* }
-.actions {
-    margin-top: 1rem;
-    text-align: right;
-  }
-  
-  .actions button {
-    font: inherit;
-    cursor: pointer;
-    background-color: #000000;
-    color: white;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #000000;
-    border-radius: 4px;
-    font-weight: bold;
-  }
-  
-  .actions button:hover,
-  .actions button:active {
-    background-color: #111111;
-    border-color: #000000;
-  }  */

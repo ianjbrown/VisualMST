@@ -11,18 +11,17 @@ import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutl
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
+import { Row } from "react-bootstrap";
 
 function KruskalVisualisationPage(props) {
   const [algorithmState, setAlgorithmState] = useState(0);
   const [algorithmStep, setAlgorithmStep] = useState(0);
-  const [edgesQueue, setEdgesQueue] = useState(
-    JSON.parse(JSON.stringify(props.MSTGraph[2]))
-  );
-  const [edgesQueueRemoved, setEdgesQueueRemoved] = useState([]);
   const [backgroundOn, setBackgroundOn] = useState(true);
   const [Paused, setPaused] = useState(true);
   const [Expanded, setExpanded] = useState(true);
   const [inverseSpeed, setInverseSpeed] = useState(1000);
+
+  const edgesQueueStages = JSON.parse(JSON.stringify(props.MSTGraph[2]));
 
   const expandInfo = useSpring({
     opacity: Expanded ? 1 : 0,
@@ -37,9 +36,9 @@ function KruskalVisualisationPage(props) {
     right: Expanded ? "500px" : "245px",
     // scale: Expanded ? (1, 1) : (1, 1),
   });
-  const fadeMessage = useSpring({
-    opacity: 0,
-  });
+  // const fadeMessage = useSpring({
+  //   opacity: 0,
+  // });
 
   const notInitialRender = useRef(false);
 
@@ -67,7 +66,7 @@ function KruskalVisualisationPage(props) {
         onClick={playPauseHandler}
       />
     );
-    playPauseToolTip = "Play Visualisation"
+    playPauseToolTip = "Play Visualisation";
   } else {
     playPause = (
       <PauseOutlinedIcon
@@ -75,26 +74,29 @@ function KruskalVisualisationPage(props) {
         onClick={playPauseHandler}
       />
     );
-    playPauseToolTip = "Pause Visualisation"
+    playPauseToolTip = "Pause Visualisation";
   }
 
   let circles = [];
   let graph = props.graph;
+  let noOfVertices = graph.noOfVertices;
   let MSTGraph = props.MSTGraph;
   console.log(MSTGraph);
   let minWeight = MSTGraph[3];
-  // let ufs = MSTGraph[3];
-  let edgesQ = edgesQueue;
-  let edgesQRemoved = edgesQueueRemoved;
-  const edgesQueuePrint = edgesQueue.map((edge) => (
-    <li>
-      (({edge.elem[0]},{edge.elem[1]}), {edge.prio})
-    </li>
-  ));
+  let edgesQStages = edgesQueueStages;
+  let edgesQ = Object.assign([], edgesQStages[algorithmStep]);
+  let edgesQueuePrint;
+  if (typeof edgesQ != "undefined") {
+    edgesQueuePrint = edgesQ.map((edge) => (
+      <li>
+        (({edge.elem[0]},{edge.elem[1]}). {edge.prio})
+      </li>
+    ));
+  }
   // const disjointSetsPrint = ufs.map((uf) => <li>{uf}</li>);
 
   let edge;
-  if (typeof edgesQueue[0] == "undefined") {
+  if (typeof edgesQ[0] == "undefined") {
     edge = [0, 0, 0];
   } else {
     edge = [edgesQ[0].elem[0], edgesQ[0].elem[1], edgesQ[0].prio];
@@ -139,20 +141,33 @@ function KruskalVisualisationPage(props) {
     return found;
   }
 
+  function foundTree() {
+    let count = 0;
+    MSTGraph[4].slice(0, algorithmStep).forEach((edge) => {
+      if (edgeInMST(edge)) {
+        count++;
+      }
+    });
+    if (count === noOfVertices - 1) {
+      return true;
+    }
+    return false;
+  }
+
   function prepareCanvas() {
     const canvas = canvasRef.current;
     const canvas2 = canvasRef2.current;
 
-    canvas.width = window.innerWidth * (5 / 8);
+    canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    canvas2.width = window.innerWidth * (5 / 8);
+    canvas2.width = window.innerWidth;
     canvas2.height = window.innerHeight;
 
     const ctx = canvas.getContext("2d");
     const ctx2 = canvas2.getContext("2d");
 
-    ctx.scale(1.3, 2.1);
-    ctx2.scale(1.3, 2.1);
+    ctx.scale(2.2, 2.1);
+    ctx2.scale(2.2, 2.1);
 
     ctx.lineCap = "round";
     ctx2.lineCap = "round";
@@ -171,7 +186,7 @@ function KruskalVisualisationPage(props) {
     circles = [];
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    for (var i = 0; i < graph.noOfVertices; i++) {
+    for (var i = 0; i < noOfVertices; i++) {
       var circle = new Circle(
         400 + 300 * Math.cos((i * 2 * Math.PI) / graph.noOfVertices),
         235 + 200 * Math.sin((i * 2 * Math.PI) / graph.noOfVertices),
@@ -238,11 +253,8 @@ function KruskalVisualisationPage(props) {
     drawCircles();
     if (backgroundOn) drawGraph(graph.AdjList);
 
-    var steps = MSTGraph[2];
-    console.log(steps);
-    console.log(algorithmStep);
+    var steps = MSTGraph[4];
     for (var i = 0; i < algorithmStep; i++) {
-      // console.log(steps);
       var step = steps[i];
       var p1 = step.elem[0];
       var p2 = step.elem[1];
@@ -254,7 +266,7 @@ function KruskalVisualisationPage(props) {
         ctx.lineWidth = 1.25;
       } else {
         ctx.strokeStyle = "lightgrey";
-        var fillStyle = "lightgrey";
+        fillStyle = "lightgrey";
         ctx.lineWidth = 1;
       }
       ctx.beginPath();
@@ -267,19 +279,13 @@ function KruskalVisualisationPage(props) {
       ctx.beginPath();
       ctx.strokeStyle = "blue";
       ctx.lineWidth = 1;
-      ctx.moveTo(
-        circles[edgesQueue[0].elem[0]].x,
-        circles[edgesQueue[0].elem[0]].y
-      );
-      ctx.lineTo(
-        circles[edgesQueue[0].elem[1]].x,
-        circles[edgesQueue[0].elem[1]].y
-      );
+      ctx.moveTo(circles[edgesQ[0].elem[0]].x, circles[edgesQ[0].elem[0]].y);
+      ctx.lineTo(circles[edgesQ[0].elem[1]].x, circles[edgesQ[0].elem[1]].y);
       ctx.stroke();
       drawEdgeWeights(
-        circles[edgesQueue[0].elem[0]],
-        circles[edgesQueue[0].elem[1]],
-        edgesQueue[0].prio,
+        circles[edgesQ[0].elem[0]],
+        circles[edgesQ[0].elem[1]],
+        edgesQ[0].prio,
         "blue"
       );
     }
@@ -288,19 +294,13 @@ function KruskalVisualisationPage(props) {
       ctx.beginPath();
       ctx.strokeStyle = "blue";
       ctx.lineWidth = 1;
-      ctx.moveTo(
-        circles[edgesQueue[0].elem[0]].x,
-        circles[edgesQueue[0].elem[0]].y
-      );
-      ctx.lineTo(
-        circles[edgesQueue[0].elem[1]].x,
-        circles[edgesQueue[0].elem[1]].y
-      );
+      ctx.moveTo(circles[edgesQ[0].elem[0]].x, circles[edgesQ[0].elem[0]].y);
+      ctx.lineTo(circles[edgesQ[0].elem[1]].x, circles[edgesQ[0].elem[1]].y);
       ctx.stroke();
       drawEdgeWeights(
-        circles[edgesQueue[0].elem[0]],
-        circles[edgesQueue[0].elem[1]],
-        edgesQueue[0].prio,
+        circles[edgesQ[0].elem[0]],
+        circles[edgesQ[0].elem[1]],
+        edgesQ[0].prio,
         "blue"
       );
     }
@@ -309,19 +309,13 @@ function KruskalVisualisationPage(props) {
       ctx.beginPath();
       ctx.strokeStyle = "orange";
       ctx.lineWidth = 1;
-      ctx.moveTo(
-        circles[edgesQueue[0].elem[0]].x,
-        circles[edgesQueue[0].elem[0]].y
-      );
-      ctx.lineTo(
-        circles[edgesQueue[0].elem[1]].x,
-        circles[edgesQueue[0].elem[1]].y
-      );
+      ctx.moveTo(circles[edgesQ[0].elem[0]].x, circles[edgesQ[0].elem[0]].y);
+      ctx.lineTo(circles[edgesQ[0].elem[1]].x, circles[edgesQ[0].elem[1]].y);
       ctx.stroke();
       drawEdgeWeights(
-        circles[edgesQueue[0].elem[0]],
-        circles[edgesQueue[0].elem[1]],
-        edgesQueue[0].prio,
+        circles[edgesQ[0].elem[0]],
+        circles[edgesQ[0].elem[1]],
+        edgesQ[0].prio,
         "orange"
       );
     }
@@ -329,19 +323,13 @@ function KruskalVisualisationPage(props) {
       ctx.beginPath();
       ctx.strokeStyle = "blue";
       ctx.lineWidth = 1;
-      ctx.moveTo(
-        circles[edgesQueue[0].elem[0]].x,
-        circles[edgesQueue[0].elem[0]].y
-      );
-      ctx.lineTo(
-        circles[edgesQueue[0].elem[1]].x,
-        circles[edgesQueue[0].elem[1]].y
-      );
+      ctx.moveTo(circles[edgesQ[0].elem[0]].x, circles[edgesQ[0].elem[0]].y);
+      ctx.lineTo(circles[edgesQ[0].elem[1]].x, circles[edgesQ[0].elem[1]].y);
       ctx.stroke();
       drawEdgeWeights(
-        circles[edgesQueue[0].elem[0]],
-        circles[edgesQueue[0].elem[1]],
-        edgesQueue[0].prio,
+        circles[edgesQ[0].elem[0]],
+        circles[edgesQ[0].elem[1]],
+        edgesQ[0].prio,
         "blue"
       );
     }
@@ -349,19 +337,13 @@ function KruskalVisualisationPage(props) {
       ctx.beginPath();
       ctx.strokeStyle = "lightgrey";
       ctx.lineWidth = 1;
-      ctx.moveTo(
-        circles[edgesQueue[0].elem[0]].x,
-        circles[edgesQueue[0].elem[0]].y
-      );
-      ctx.lineTo(
-        circles[edgesQueue[0].elem[1]].x,
-        circles[edgesQueue[0].elem[1]].y
-      );
+      ctx.moveTo(circles[edgesQ[0].elem[0]].x, circles[edgesQ[0].elem[0]].y);
+      ctx.lineTo(circles[edgesQ[0].elem[1]].x, circles[edgesQ[0].elem[1]].y);
       ctx.stroke();
       drawEdgeWeights(
-        circles[edgesQueue[0].elem[0]],
-        circles[edgesQueue[0].elem[1]],
-        edgesQueue[0].prio,
+        circles[edgesQ[0].elem[0]],
+        circles[edgesQ[0].elem[1]],
+        edgesQ[0].prio,
         "lightgrey"
       );
     }
@@ -373,7 +355,6 @@ function KruskalVisualisationPage(props) {
   }
 
   function timeoutHandler(value) {
-    console.log(value);
     setInverseSpeed(value);
   }
 
@@ -381,10 +362,7 @@ function KruskalVisualisationPage(props) {
     if (!Paused) return;
     setAlgorithmStep(0);
     setAlgorithmState(0);
-    edgesQRemoved = [];
-    edgesQ = JSON.parse(JSON.stringify(props.MSTGraph[2]));
-    setEdgesQueue(edgesQ);
-    setEdgesQueueRemoved(edgesQRemoved);
+    edgesQ = JSON.parse(JSON.stringify(props.MSTGraph[2][0]));
   }
 
   function backHandler() {
@@ -392,15 +370,10 @@ function KruskalVisualisationPage(props) {
     if (algorithmState === 7) {
       setAlgorithmState(1);
     } else if (algorithmState === 1 && algorithmStep > 0) {
-      console.log(edgesQRemoved);
-      let unshiftEdge = edgesQRemoved.pop();
-      console.log("UNSHIFT EDGE");
-      console.log(unshiftEdge);
-      edgesQ.unshift(unshiftEdge);
-      setEdgesQueue(edgesQ);
-      setEdgesQueueRemoved(edgesQRemoved);
+      let recoverEdge = MSTGraph[4][algorithmStep - 1];
+      edgesQ = edgesQStages[algorithmStep - 1];
       setAlgorithmStep(algorithmStep - 1);
-      if (edgeInMST(unshiftEdge)) {
+      if (edgeInMST(recoverEdge)) {
         setAlgorithmState(4);
       } else {
         setAlgorithmState(6);
@@ -410,31 +383,20 @@ function KruskalVisualisationPage(props) {
     } else {
       setAlgorithmState(algorithmState - 1);
     }
-    // setAlgorithmState(algorithmState - 1);
   }
   function forwardStep() {
     if (algorithmState === 7) {
-      console.log("0");
       return;
     }
-    if (algorithmState === 1 && !edgesQ.length) {
-      console.log("1");
-      console.log(MSTGraph);
+    if (algorithmState === 1 && (!edgesQ.length || foundTree())) {
       setAlgorithmState(7);
       setPaused(true);
     } else if (algorithmState === 3 && !edgeInMST(edgesQ[0])) {
-      console.log("2");
       setAlgorithmState(5);
     } else if (algorithmState === 4 || algorithmState === 6) {
-      console.log("3");
       setAlgorithmStep(algorithmStep + 1);
       setAlgorithmState(1);
-      edgesQRemoved.push(edgesQ[0]);
-      edgesQ.shift();
-      setEdgesQueue(edgesQ);
-      setEdgesQueueRemoved(edgesQRemoved);
     } else {
-      console.log("4");
       setAlgorithmState(algorithmState + 1);
     }
   }
@@ -446,12 +408,9 @@ function KruskalVisualisationPage(props) {
 
   function lastHandler() {
     if (!Paused) return;
-    setAlgorithmStep(MSTGraph[2].length);
+    setAlgorithmStep(MSTGraph[4].length);
     setAlgorithmState(7);
-    edgesQRemoved = edgesQ;
-    edgesQ = [];
-    setEdgesQueue(edgesQ);
-    setEdgesQueueRemoved(edgesQRemoved);
+    edgesQ = edgesQStages[edgesQStages.length - 1];
   }
 
   function toggleBackgoundGraphHandler(toggle) {
@@ -467,7 +426,6 @@ function KruskalVisualisationPage(props) {
   }
 
   async function play() {
-    // console.log(inverseSpeed);
     await sleep();
     forwardStep();
   }
@@ -476,7 +434,6 @@ function KruskalVisualisationPage(props) {
     prepareCanvas();
     drawCircles();
     drawGraph(graph.AdjList);
-    // setEdgesQueue(JSON.parse(JSON.stringify(MSTGraph[2])));
   }, []);
 
   useEffect(() => {
@@ -488,35 +445,39 @@ function KruskalVisualisationPage(props) {
 
   return (
     <React.Fragment>
-      <Link to="/" className="btn btn-primary">
-        Exit
-      </Link>
-      {algorithmStateMessage}
+      <h2 className="pt-1">{props.algName}</h2>
+      <div className={classes.closeButton}>
+        <Link to="/" className="btn btn-close" />
+      </div>
+      <Row>{algorithmStateMessage}</Row>
+
       <animated.div className={classes.canvasDiv} style={expandCanvas}>
         <canvas className={classes.canvasStyle} ref={canvasRef2} />
         <canvas className={classes.canvasStyle} ref={canvasRef} />
       </animated.div>
+
       <div className={classes.infoPanelTab}>{expandArrow}</div>
       <animated.div className={classes.infoPanel} style={expandInfo}>
         <h1>Pseudocode</h1>
         <PseudoCode algName={props.algName} algorithmState={algorithmState} />
-        <div className={classes.edgesQueue}>
-          <h1>Edges Queue</h1>
-        </div>
+        <h1>Edges Queue</h1>
         <div className={classes.edgesQueueList}>
           <ol>{edgesQueuePrint}</ol>
         </div>
       </animated.div>
-      <PlayBack
-        symbolToolTip={playPauseToolTip}
-        symbol={playPause}
-        onTimeoutChange={timeoutHandler}
-        onFirst={firstHandler}
-        onBack={backHandler}
-        onForward={forwardHandler}
-        onLast={lastHandler}
-        onToggleBackgroundGraph={toggleBackgoundGraphHandler}
-      />
+
+      <Row className={classes.fixedRowBottom}>
+        <PlayBack
+          symbolToolTip={playPauseToolTip}
+          symbol={playPause}
+          onTimeoutChange={timeoutHandler}
+          onFirst={firstHandler}
+          onBack={backHandler}
+          onForward={forwardHandler}
+          onLast={lastHandler}
+          onToggleBackgroundGraph={toggleBackgoundGraphHandler}
+        />
+      </Row>
     </React.Fragment>
   );
 }

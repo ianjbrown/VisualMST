@@ -518,7 +518,7 @@ function VisualisationPage(props) {
   //   }, [Expanded]);
 
   return (
-    <div>
+    <>
       {props.algName === "Kruskal's Algorithm" && (
         <KruskalVisualisationPage
           graph={graph}
@@ -535,7 +535,7 @@ function VisualisationPage(props) {
           startingVertex={props.startingVertex}
         />
       )}
-    </div>
+    </>
     // <div>
     //   {algorithmStateMessage}
     //   <animated.div className={classes.canvasDiv} style={expandCanvas}>

@@ -20,6 +20,14 @@ class Graph {
     //this.state.noOfVertices += 1;
   }
 
+  getEdgeCount() {
+    let count = 0;
+    for (const [key, value] of this.AdjList.entries()) {
+      count += value.length;
+    }
+    return count / 2;
+  }
+
   // add edge to each others adjacency lists since undirected graph
   addEdge(u, v, weight) {
     let uAdjList = this.AdjList.get(u);
@@ -202,6 +210,8 @@ class Graph {
   kruskal() {
     // Create new graph for MST and priority queue for edges sorted by weight
     // create union-find/disjoint-sets data structure to help check for introduction of cycles
+    var edgeCompSequence = [];
+    var edgesQueues = [];
     var minWeight = 0;
     var edgeSequence = [];
     const MST = new Graph(this.noOfVertices);
@@ -221,10 +231,13 @@ class Graph {
         edgesQueue.enqueue([element[0], adjacent.node], adjacent.weight);
       }
     }
-    const edgesQueueInitial = Object.assign([], edgesQueue.items);
-    // // console.log(edgesQueueInitial);
-    // // console.log(typeof edgesQueueInitial)
+    edgesQueues.push(Object.assign([], edgesQueue.items));
+
     while (!edgesQueue.isEmpty()) {
+      if (MST.getEdgeCount() === this.noOfVertices - 1) {
+        console.log("Terminate early");
+        break;
+      }
       const nextEdge = edgesQueue.dequeue();
       const vertices = nextEdge.elem;
       const weight = nextEdge.prio;
@@ -237,16 +250,18 @@ class Graph {
         uf.union(vertices[0], vertices[1]);
         edgeSequence.push([vertices[0], vertices[1], weight]);
       }
+      edgesQueues.push(Object.assign([], edgesQueue.items));
+      edgeCompSequence.push(nextEdge);
     }
     // console.log(minWeight);
-    return [MST, edgeSequence, edgesQueueInitial, minWeight];
+    return [MST, edgeSequence, edgesQueues, minWeight, edgeCompSequence];
   }
 
-  prim(startingVertex) {
+  prim(startingVertexString) {
     var edgesQueues = [];
     var visiteds = [];
     var minWeight = 0;
-    var startingVertex = parseInt(startingVertex);
+    var startingVertex = parseInt(startingVertexString);
     /* create data structures... new graph for MST, 
     queue for edges sorted by weight, and array of visited vertices */
     var edgeSequence = [];
@@ -296,7 +311,7 @@ class Graph {
       }
       visiteds.push(Object.assign([], visited));
       edgesQueues.push(Object.assign([], edgesQueue.items));
-      edgeCompSequence.push([nextEdge.elem[0], nextNode, nextEdge.prio]);
+      edgeCompSequence.push(nextEdge);
 
       MST.setNoOfVertices(MST.AdjList.size);
       // console.log(JSON.stringify(visiteds));
@@ -356,7 +371,7 @@ class Graph {
   }
 
   testAlgorithms(testNumber) {
-    const random = new Random();
+    // const random = new Random();
     var passedTests = 0;
     var printCounter = 0;
     for (var test = 0; test < testNumber; test++, printCounter++) {
