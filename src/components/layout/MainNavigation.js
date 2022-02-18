@@ -17,7 +17,7 @@ function MainNavigaton() {
               <Nav.Link>About</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/algorithms">
-              <Nav.Link>The Algorithms</Nav.Link>
+              <Nav.Link>Algorithms</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/contact">
               <Nav.Link>Contact</Nav.Link>

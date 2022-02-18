@@ -516,10 +516,9 @@ function VisualisationPage(props) {
   //     const ctx = canvas.getContext("2d");
   //     Expanded ? ctx.scale(0.95, 1) : ctx.scale(1.0526,1);
   //   }, [Expanded]);
-
   return (
     <>
-      {props.algName === "Kruskal's Algorithm" && (
+      {props.alg === "kruskal" && (
         <KruskalVisualisationPage
           graph={graph}
           MSTGraph={MSTGraph}
@@ -527,7 +526,7 @@ function VisualisationPage(props) {
         />
       )}
 
-      {props.algName === "Prim's Algorithm" && (
+      {props.alg === "prim" && (
         <PrimVisualisationPage
           graph={graph}
           MSTGraph={MSTGraph}

@@ -67,6 +67,7 @@ function PrimVisualisationPage(props) {
     playPauseToolTip = "Pause Visualisation";
   }
 
+  let algName = "Prim's Algorithm";
   let circles = [];
   let graph = props.graph;
   let MSTGraph = props.MSTGraph;
@@ -555,7 +556,7 @@ function PrimVisualisationPage(props) {
 
   return (
     <React.Fragment>
-      <h2 className="pt-1">{props.algName}</h2>
+      <h2 className="pt-1">{algName}</h2>
       <div className={classes.closeButton}>
         <Link to="/" className="btn btn-close" />
       </div>
@@ -569,7 +570,7 @@ function PrimVisualisationPage(props) {
       <div className={classes.infoPanelTab}>{expandArrow}</div>
       <animated.div className={classes.infoPanel} style={expandInfo}>
         <h1>Pseudocode</h1>
-        <PseudoCode algName={props.algName} algorithmState={algorithmState} />
+        <PseudoCode algName={algName} algorithmState={algorithmState} />
         <h1>Edges Queue</h1>
         <div className={classes.edgesQueueList}>
           <ol>{edgesQueuePrint}</ol>
