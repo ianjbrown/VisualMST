@@ -155,7 +155,7 @@ function PrimVisualisationPage(props) {
     ctx2.strokeStyle = "black";
 
     ctx2.lineWidth = 1;
-    ctx2.font = "30px Arial";
+    ctx2.font = "12.5px Arial";
 
     ctxRef.current = ctx;
     ctxRef2.current = ctx2;

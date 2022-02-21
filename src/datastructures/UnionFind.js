@@ -13,13 +13,9 @@ class UnionFind {
 
     if (rootA < rootB) {
       if (this.parent[b] !== b) this.union(this.parent[b], a);
-      console.log(this.parent[b]);
-      console.log(a);
       this.parent[b] = this.parent[a];
     } else {
       if (this.parent[a] !== a) this.union(this.parent[a], b);
-      console.log(b);
-      console.log(this.parent[a]);
       this.parent[a] = this.parent[b];
     }
   }

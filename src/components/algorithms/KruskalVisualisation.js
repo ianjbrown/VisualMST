@@ -32,8 +32,8 @@ function KruskalVisualisationPage(props) {
     //   await next({opacity: 1})
     //   await next({opacity: 0})
     // }
-    left: Expanded ? "10px" : "305px",
-    right: Expanded ? "500px" : "245px",
+    left: Expanded ? "10px" : "285px",
+    right: Expanded ? "500px" : "225px",
     // scale: Expanded ? (1, 1) : (1, 1),
   });
   // const fadeMessage = useSpring({
@@ -82,7 +82,6 @@ function KruskalVisualisationPage(props) {
   let graph = props.graph;
   let noOfVertices = graph.noOfVertices;
   let MSTGraph = props.MSTGraph;
-  console.log(MSTGraph);
   let minWeight = MSTGraph[3];
   let edgesQStages = edgesQueueStages;
   let edgesQ = Object.assign([], edgesQStages[algorithmStep]);

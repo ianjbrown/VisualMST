@@ -1,7 +1,6 @@
 import { ListGroup } from "react-bootstrap";
 
 function PseudoCode(props) {
-  console.log(props.algName);
   if (props.algName === "Kruskal's Algorithm") {
     return (
       <ListGroup variant="flush" as="ul">

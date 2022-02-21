@@ -12,7 +12,7 @@ import Layout from "./components/layout/Layout";
 ReactDOM.render(
   <React.StrictMode>
     <Layout>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/algorithms" component={AlgorithmsPage} />

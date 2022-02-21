@@ -5,12 +5,10 @@ import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
 import TooltipIcon from "./TooltipIcon";
 
 import Slider from "@mui/material/Slider";
-import { OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
+import { OverlayTrigger, Tooltip, Col } from "react-bootstrap";
 
 function PlayBack(props) {
   const [backgroundOn, setBackgroundOn] = useState(true);
-
-  // const [timeout, setTimeout] = useState(1000);
 
   let toggle;
   let toggleText;
@@ -34,7 +32,6 @@ function PlayBack(props) {
   }
 
   const timeoutHandler = (event, newValue) => {
-    console.log(newValue);
     props.onTimeoutChange(newValue);
   };
 
