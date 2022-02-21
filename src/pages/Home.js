@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import MainNavigaton from "../components/layout/MainNavigation";
 import ImageContainer from "../components/ui/ImageContainer";
-import { Container, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import vis from "../images/vis.gif";
 
 function HomePage() {

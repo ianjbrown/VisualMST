@@ -2,10 +2,9 @@ import { useState } from "react";
 import { Alert, Container, Form, Button } from "react-bootstrap";
 import MainNavigaton from "../components/layout/MainNavigation";
 import Centered from "../components/ui/Centered";
+import evalsheet from "../VisualMST_Eval.pdf";
 
 function ContactPage() {
-  const FORM_ENDPOINT =
-    "https://public.herotofu.com/v1/755bbcc0-90a6-11ec-8462-6960be7ce578";
   const [submitted, setSubmitted] = useState(false);
 
   function submitHandler() {
@@ -34,10 +33,10 @@ function ContactPage() {
           <div style={{ marginTop: "15px", marginBottom: "40px" }}>
             <p>
               I am currently collecting feedback on this application. If you
-              have a few minutes please visit the link below and complete the Google 
-              form. I would greatly appreciate it!
+              have a few minutes please download the briefing sheet below
+              and complete the Google form. I would greatly appreciate it!
             </p>
-            <p><a href="https://google.com">Link to Google Form.</a></p>
+            <p><a href={evalsheet}>Evaluation Briefing Sheet.</a></p>
           </div>
           <h1>Contact</h1>
           <p style={{ marginTop: "15px" }}>

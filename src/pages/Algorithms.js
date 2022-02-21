@@ -6,9 +6,15 @@ import MainNavigation from "../components/layout/MainNavigation";
 import Graph from "../datastructures/Graph";
 import NewGraphForm from "../components/algorithms/VisulisationForm";
 import { Container, Tabs, Tab, Alert } from "react-bootstrap";
+import five from "../datastructures/text/5.txt";
+import six from "../datastructures/text/6.txt";
+import seven from "../datastructures/text/7.txt";
+import eight from "../datastructures/text/8.txt";
+import nine from "../datastructures/text/9.txt";
+import ten from "../datastructures/text/10.txt";
 
 function AlgorithmsPage() {
-  const [noOfVertices, setNoOfVertices] = useState("6");
+  const [noOfVertices, setNoOfVertices] = useState("5");
   const [startingVertex, setStartingVertex] = useState("0");
   const [genImp, setGenImp] = useState();
   const [selectedFile, setSelectedFile] = useState();
@@ -36,33 +42,31 @@ function AlgorithmsPage() {
     setSelectedFile(value);
   }
 
-  function generateHelper() {
-    var fileName = noOfVertices + ".txt";
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("Get", "/text/" + fileName, false);
-    rawFile.onreadystatechange = () => {
-      if (rawFile.readyState === 4) {
-        if (rawFile.status === 200 || rawFile.status === 0) {
-          var allText = rawFile.responseText;
-          var lines = allText.split(/[\r\n]+/g);
-          var g = new Graph(noOfVertices);
-          g.generateGraph(lines);
-          setSelectedGraph(g);
-          if (key === "kruskal") {
-            setSelectedMSTGraph(g.kruskal());
-          } else if (key === "prim") {
-            setSelectedMSTGraph(g.prim(startingVertex));
-          }
-
-          history.replace("/algorithms/" + key);
-        }
-      }
-    };
-    rawFile.send(null);
+  async function generateHelper() {
+    var fileName;
+    switch (noOfVertices) {
+      case "5": fileName = five; break;
+      case "6": fileName = six; break;
+      case "7": fileName = seven; break;
+      case "8": fileName = eight; break;
+      case "9": fileName = nine; break;
+      case "10": fileName = ten; break;
+    }
+    let response = await fetch(fileName);
+    let data = await response.text();
+    var lines = data.split(/[\r\n]+/g);
+    var g = new Graph(noOfVertices);
+    g.generateGraph(lines);
+    setSelectedGraph(g);
+    if (key === "kruskal") {
+      setSelectedMSTGraph(g.kruskal());
+    } else if (key === "prim") {
+      setSelectedMSTGraph(g.prim(startingVertex));
+    }
+    history.replace("/algorithms/" + key);
   }
 
   function importHelper() {
-    console.log(selectedFile);
     const prom = new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -94,7 +98,6 @@ function AlgorithmsPage() {
   }
 
   function submitHandler(event) {
-    console.log("HELLO");
     if (genImp === "Generate Graph") {
       generateHelper();
     } else if (genImp === "Import Graph") {

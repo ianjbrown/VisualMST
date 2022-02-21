@@ -1,41 +1,30 @@
-import { useRef, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 function NewGraphForm(props) {
-  const verticesInputRef = useRef();
-  const startingVertexRef = useRef();
-  const genImpRef = useRef();
 
   function verticesChangeHandler(event) {
-    console.log(event.target.value);
     event.preventDefault();
     props.onVerticesChange(event.target.value);
   }
 
   function startingChangeHandler(event) {
-    console.log(event.current.value);
     event.preventDefault();
-    props.onStartingChange(event.current.value);
+    props.onStartingChange(event.target.value);
   }
 
   function genImpChangeHandler(event) {
-    console.log(event.target.value);
     event.preventDefault();
     props.onGenImpChange(event.target.value);
   }
 
   function fileChangeHandler(event) {
-    console.log(event.target.files[0]);
     event.preventDefault();
     props.onFileChange(event.target.files[0]);
   }
 
   function submitHandler(event) {
-    console.log(event);
     event.preventDefault();
-    console.log("hi");
     props.onSubmit(event);
-    console.log("hey");
   }
 
   return (
@@ -49,8 +38,7 @@ function NewGraphForm(props) {
           max="10"
           required
           id="vertices"
-          defaultValue="6"
-          ref={verticesInputRef}
+          defaultValue="5"
         />
       </Form.Group>
       {props.alg === "prim" && (
@@ -64,13 +52,12 @@ function NewGraphForm(props) {
             required
             id="startingvertex"
             defaultValue="0"
-            ref={startingVertexRef}
           />
         </Form.Group>
       )}
       <Form.Group className="mb-3">
         <Form.Label>Generate or Import Graph?</Form.Label>
-        <Form.Select ref={genImpRef} onChange={genImpChangeHandler}>
+        <Form.Select onChange={genImpChangeHandler}>
           <option>Select</option>
           <option>Generate Graph</option>
           <option>Import Graph</option>

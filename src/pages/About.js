@@ -2,7 +2,6 @@ import MainNavigaton from "../components/layout/MainNavigation";
 import { Container, Accordion, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Centered from "../components/ui/Centered";
-import ImageContainer from "../components/ui/ImageContainer";
 import vis from "../images/vis.gif";
 import vis2 from "../images/vis2.gif";
 import me from "../images/me_walk2.jpg";

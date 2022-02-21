@@ -137,10 +137,10 @@ function PrimVisualisationPage(props) {
     const canvas = canvasRef.current;
     const canvas2 = canvasRef2.current;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas2.width = window.innerWidth;
-    canvas2.height = window.innerHeight;
+    canvas.width = 1920;
+    canvas.height = 969;
+    canvas2.width = 1920;
+    canvas2.height = 969;
 
     const ctx = canvas.getContext("2d");
     const ctx2 = canvas2.getContext("2d");
@@ -155,7 +155,7 @@ function PrimVisualisationPage(props) {
     ctx2.strokeStyle = "black";
 
     ctx2.lineWidth = 1;
-    ctx2.font = "30px Arial";
+    ctx2.font = "12.5px Arial";
 
     ctxRef.current = ctx;
     ctxRef2.current = ctx2;

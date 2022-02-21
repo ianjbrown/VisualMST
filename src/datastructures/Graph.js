@@ -40,9 +40,6 @@ class Graph {
     // no self-connecting edges
     if (u === v) return false;
     // undirected graph so push onto both
-    // if (uAdjList === undefined)
-    // // console.log(uAdjList.size);
-    // // console.log(vAdjList);
     uAdjList.push({
       node: v,
       weight: weight,
@@ -59,8 +56,6 @@ class Graph {
   isConnected(startingNode) {
     var visited = {};
     this.isConnectedUtil(startingNode, visited);
-    // // console.log(visited);
-    // // console.log(Object.keys(visited));
     if (Object.keys(visited).length < this.noOfVertices) {
       return false;
     } else {
@@ -115,7 +110,6 @@ class Graph {
         "This Graph is an MST because it has n-1 (" + edgeCount / 2 + ") edges"
       );
     }
-    // //console.log(this.AdjList);
     return outerConc;
   }
 
@@ -132,67 +126,65 @@ class Graph {
 
   }
 
-  generateRandomGraph() {
-    const random = new Random();
-    let edges = 0;
+  // Generate random graph, app now generates predetermined graphs from backend instead.
+  // generateRandomGraph() {
+  //   const random = new Random();
+  //   let edges = 0;
 
-    this.AdjList.clear();
+  //   this.AdjList.clear();
 
-    //Add the vertices
-    for (var i = 0; i < this.noOfVertices; i++) {
-      this.addVertex(i);
-    }
+  //   //Add the vertices
+  //   for (var i = 0; i < this.noOfVertices; i++) {
+  //     this.addVertex(i);
+  //   }
 
-    //Add edges until we have a connected graph
-    while (!this.isConnected(0)) {
-      //const edges = random.integer(1,)
-      let edge = [
-        random.integer(0, this.noOfVertices - 1),
-        random.integer(0, this.noOfVertices - 1),
-        random.integer(1, 30),
-      ];
-      // if (this.AdjList.get(edge[0]).length > 2) continue;
-      // if (this.AdjList.get(edge[1]).length > 2) continue;
-      // console.log(JSON.stringify(this.AdjList.get(edge[0])));
-      // console.log(this.AdjList.get(edge[0]).length);
-      let added = this.addEdge(edge[0], edge[1], edge[2]);
-      if (added) edges++;
-    }
-    console.log(edges);
-    let moreEdges;
-    if (edges === this.noOfVertices - 1) {
-      console.log("HEY THERE");
-      console.log(this.noOfVertices);
-      switch (this.noOfVertices) {
-        case "5":
-          moreEdges = 6;
-          break;
-        case "6":
-          moreEdges = 8;
-          break;
-        case "7":
-          moreEdges = 10;
-          break;
-        case "8":
-          moreEdges = 12;
-          break;
-        case "9":
-          moreEdges = 14;
-          break;
-        case "10":
-          moreEdges = 16;
-      }
-    }
+  //   //Add edges until we have a connected graph
+  //   while (!this.isConnected(0)) {
+  //     //const edges = random.integer(1,)
+  //     let edge = [
+  //       random.integer(0, this.noOfVertices - 1),
+  //       random.integer(0, this.noOfVertices - 1),
+  //       random.integer(1, 30),
+  //     ];
+  //     // if (this.AdjList.get(edge[0]).length > 2) continue;
+  //     // if (this.AdjList.get(edge[1]).length > 2) continue;
+  //     // console.log(JSON.stringify(this.AdjList.get(edge[0])));
+  //     // console.log(this.AdjList.get(edge[0]).length);
+  //     let added = this.addEdge(edge[0], edge[1], edge[2]);
+  //     if (added) edges++;
+  //   }
+  //   let moreEdges;
+  //   if (edges === this.noOfVertices - 1) {
+  //     switch (this.noOfVertices) {
+  //       case "5":
+  //         moreEdges = 6;
+  //         break;
+  //       case "6":
+  //         moreEdges = 8;
+  //         break;
+  //       case "7":
+  //         moreEdges = 10;
+  //         break;
+  //       case "8":
+  //         moreEdges = 12;
+  //         break;
+  //       case "9":
+  //         moreEdges = 14;
+  //         break;
+  //       case "10":
+  //         moreEdges = 16;
+  //     }
+  //   }
 
-    while (edges < moreEdges) {
-      let wasAdded = this.addEdge(
-        random.integer(0, this.noOfVertices - 1),
-        random.integer(0, this.noOfVertices - 1),
-        random.integer(1, 30)
-      );
-      if (wasAdded) edges++;
-    }
-  }
+  //   while (edges < moreEdges) {
+  //     let wasAdded = this.addEdge(
+  //       random.integer(0, this.noOfVertices - 1),
+  //       random.integer(0, this.noOfVertices - 1),
+  //       random.integer(1, 30)
+  //     );
+  //     if (wasAdded) edges++;
+  //   }
+  // }
 
   importGraph(lines) {
     //add the vertices
@@ -216,7 +208,6 @@ class Graph {
     var edgeSequence = [];
     const MST = new Graph(this.noOfVertices);
     var edgesQueue = new PriorityQueue();
-    // console.log(this.AdjList);
     let uf = new UnionFind(this.AdjList);
     var ufs = [uf];
 
@@ -253,7 +244,6 @@ class Graph {
       edgesQueues.push(Object.assign([], edgesQueue.items));
       edgeCompSequence.push(nextEdge);
     }
-    // console.log(minWeight);
     return [MST, edgeSequence, edgesQueues, minWeight, edgeCompSequence];
   }
 
@@ -269,21 +259,18 @@ class Graph {
     const MST = new Graph(this.noOfVertices);
     var edgesQueue = new PriorityQueue();
     var visited = [];
-    // console.log(JSON.stringify(visited));
 
     //begin with first node (0)
     visited.push(startingVertex);
-    // console.log(JSON.stringify(visited));
     MST.addVertex(startingVertex);
-    // console.log(startingVertex);
-    // console.log(this.AdjList);
+
     // add edges of the starting node to queue
     for (const adjacent of this.AdjList.get(parseInt(startingVertex))) {
       edgesQueue.enqueue([startingVertex, adjacent.node], adjacent.weight);
     }
     visiteds.push(Object.assign([], visited));
     edgesQueues.push(Object.assign([], edgesQueue.items));
-    // console.log("EDGES QUEUE = " + JSON.stringify(edgesQueue));
+
     // while we have not visited all vertices
     while (visited.length < this.noOfVertices) {
       // pick edge with the lowest weight
@@ -307,17 +294,13 @@ class Graph {
 
         // mark as visited
         visited.push(nextNode);
-        // console.log(visited);
       }
       visiteds.push(Object.assign([], visited));
       edgesQueues.push(Object.assign([], edgesQueue.items));
       edgeCompSequence.push(nextEdge);
 
       MST.setNoOfVertices(MST.AdjList.size);
-      // console.log(JSON.stringify(visiteds));
-      // console.log(edgeSequence);
     }
-    // visiteds.push(Object.assign([], visited));
     return [
       MST,
       edgeSequence,
