@@ -28,8 +28,8 @@ function PrimVisualisationPage(props) {
     marginLeft: Expanded ? 0 : 470,
   });
   const expandCanvas = useSpring({
-    left: Expanded ? "10px" : "305px",
-    right: Expanded ? "500px" : "245px",
+    left: Expanded ? "10px" : window.innerWidth / 8 + "px",
+    right: Expanded ? "500px" :"500px" + window.innerWidth / 8 + "px",
     // scale: Expanded ? (1, 1) : (1, 1),
   });
   // const fadeMessage = useSpring({

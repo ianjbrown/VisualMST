@@ -32,8 +32,8 @@ function KruskalVisualisationPage(props) {
     //   await next({opacity: 1})
     //   await next({opacity: 0})
     // }
-    left: Expanded ? "10px" : "285px",
-    right: Expanded ? "500px" : "225px",
+    left: Expanded ? "10px" : window.innerWidth / 8 + "px",
+    right: Expanded ? "500px" : "500px" + window.innerWidth / 8 + "px",
     // scale: Expanded ? (1, 1) : (1, 1),
   });
   // const fadeMessage = useSpring({
