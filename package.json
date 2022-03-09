@@ -23,10 +23,11 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "predeploy": "npm run build",
+    "predeploy": "npm run build-win",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=false && react-scripts build",
+    "build-win": "set CI=false&&react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -50,6 +51,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^11.2.7",
+    "gh-pages": "^3.2.3",
     "jest-dom": "^4.0.0",
     "react-test-renderer": "^17.0.2"
   }

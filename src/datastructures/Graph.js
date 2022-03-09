@@ -127,64 +127,42 @@ class Graph {
   }
 
   // Generate random graph, app now generates predetermined graphs from backend instead.
-  // generateRandomGraph() {
-  //   const random = new Random();
-  //   let edges = 0;
+  generateRandomGraph() {
+    const random = new Random();
+    let edges = 0;
 
-  //   this.AdjList.clear();
+    this.AdjList.clear();
 
-  //   //Add the vertices
-  //   for (var i = 0; i < this.noOfVertices; i++) {
-  //     this.addVertex(i);
-  //   }
+    //Add the vertices
+    for (var i = 0; i < this.noOfVertices; i++) {
+      this.addVertex(i);
+    }
 
-  //   //Add edges until we have a connected graph
-  //   while (!this.isConnected(0)) {
-  //     //const edges = random.integer(1,)
-  //     let edge = [
-  //       random.integer(0, this.noOfVertices - 1),
-  //       random.integer(0, this.noOfVertices - 1),
-  //       random.integer(1, 30),
-  //     ];
-  //     // if (this.AdjList.get(edge[0]).length > 2) continue;
-  //     // if (this.AdjList.get(edge[1]).length > 2) continue;
-  //     // console.log(JSON.stringify(this.AdjList.get(edge[0])));
-  //     // console.log(this.AdjList.get(edge[0]).length);
-  //     let added = this.addEdge(edge[0], edge[1], edge[2]);
-  //     if (added) edges++;
-  //   }
-  //   let moreEdges;
-  //   if (edges === this.noOfVertices - 1) {
-  //     switch (this.noOfVertices) {
-  //       case "5":
-  //         moreEdges = 6;
-  //         break;
-  //       case "6":
-  //         moreEdges = 8;
-  //         break;
-  //       case "7":
-  //         moreEdges = 10;
-  //         break;
-  //       case "8":
-  //         moreEdges = 12;
-  //         break;
-  //       case "9":
-  //         moreEdges = 14;
-  //         break;
-  //       case "10":
-  //         moreEdges = 16;
-  //     }
-  //   }
+    //Add edges until we have a connected graph
+    while (!this.isConnected(0)) {
+      //const edges = random.integer(1,)
+      let added = this.addEdge(
+        random.integer(0, this.noOfVertices - 1),
+        random.integer(0, this.noOfVertices - 1),
+        random.integer(1, 30)
+      );
+      if (added) edges++;
+    }
 
-  //   while (edges < moreEdges) {
-  //     let wasAdded = this.addEdge(
-  //       random.integer(0, this.noOfVertices - 1),
-  //       random.integer(0, this.noOfVertices - 1),
-  //       random.integer(1, 30)
-  //     );
-  //     if (wasAdded) edges++;
-  //   }
-  // }
+    // add a random amount of more edges to allow for more than one MST
+    let moreEdges = random.integer(
+      edges + 1,
+      0.25 * this.noOfVertices * (this.noOfVertices - 1)
+    );
+    while (edges < moreEdges) {
+      let wasAdded = this.addEdge(
+        random.integer(0, this.noOfVertices - 1),
+        random.integer(0, this.noOfVertices - 1),
+        random.integer(1, 30)
+      );
+      if (wasAdded) edges++;
+    }
+  }
 
   importGraph(lines) {
     //add the vertices
@@ -226,7 +204,7 @@ class Graph {
 
     while (!edgesQueue.isEmpty()) {
       if (MST.getEdgeCount() === this.noOfVertices - 1) {
-        console.log("Terminate early");
+        // console.log("Terminate early");
         break;
       }
       const nextEdge = edgesQueue.dequeue();
@@ -351,31 +329,6 @@ class Graph {
       }
     }
     return true;
-  }
-
-  testAlgorithms(testNumber) {
-    // const random = new Random();
-    var passedTests = 0;
-    var printCounter = 0;
-    for (var test = 0; test < testNumber; test++, printCounter++) {
-      if (printCounter === testNumber / 10) {
-        // console.log("Beginning test " + test);
-        printCounter = 0;
-      }
-      // if (printCounter === testNumber / 20) console.log("...");
-      //var v = random.integer(5, 15);
-      //this.setNoOfVertices(v);
-      this.generateGraph();
-      // //console.log(this.toString());
-      var kruskal = this.kruskal();
-      var prim = this.prim();
-      if (this.compareAdjLists(kruskal.AdjList, prim.AdjList)) {
-        passedTests++;
-      }
-    }
-    // console.log(passedTests + " matches");
-    // console.log(testNumber - passedTests + " differences");
-    // console.log("Match rate of " + (passedTests / testNumber) * 100 + "%");
   }
 }
 export default Graph;

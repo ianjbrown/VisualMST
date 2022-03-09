@@ -1,8 +1,6 @@
 import VisualisationForm from "../VisualisationForm";
-import Graph from "../../../datastructures/Graph";
 import {
   render,
-  rerender,
   screen,
   cleanup,
   waitFor,
