@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Kruskal's PseudoCode matches snapshot 1`] = `
+<ul
+  className="list-group list-group-flush"
+  data-testid="kruskal-list-group"
+  onKeyDown={[Function]}
+>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+    Sort edges in non-decreasing order;
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+    While edges remain in queue
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+      e = edge with smallest weight; 
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+      If adding e to MST doesn't create cycle 
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+       Add e to MST;  
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+      Else 
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+       Reject e from MST;  
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+    We have found a minimum spanning tree with n-1 edges
+  </li>
+</ul>
+`;
+
+exports[`Prim's PseudoCode matches snapshot 1`] = `
+<ul
+  className="list-group list-group-flush"
+  data-testid="prim-list-group"
+  onKeyDown={[Function]}
+>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+    Initialise visited set with starting vertex
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+    Add connecting edges to queue.
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+    While visited doesn't contain all vertices
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+      select edge with smallest weight 
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+      If corresponding vertex not visited 
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+       Add vertex to visited and adjacent edges to queue
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+      Else 
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+       Ignore edge  
+  </li>
+  <li
+    className="list-group-item list-group-item-dark"
+    data-rr-ui-event-key={null}
+    onClick={[Function]}
+  >
+    Found minimum spanning tree
+  </li>
+</ul>
+`;

@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Centered component matches snapshot 1`] = `
+<div
+  className="centered"
+  data-testid="centered-div"
+>
+  Hello World
+</div>
+`;

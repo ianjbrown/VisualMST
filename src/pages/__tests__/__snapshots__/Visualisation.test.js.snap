@@ -1,0 +1,607 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Kruskal Visualisation page matches snapshot 1`] = `
+Array [
+  <h2
+    className="pt-1"
+  >
+    Kruskal's Algorithm
+  </h2>,
+  <div
+    className="closeButton"
+  >
+    <a
+      className="btn btn-close"
+      href="/"
+      onClick={[Function]}
+    />
+  </div>,
+  <div
+    className="row"
+  >
+    <div
+      className="algorithmStateMessage"
+    >
+      Edges are sorted by their weight in non-decreasing order
+    </div>
+  </div>,
+  <div
+    className="canvasDiv"
+    style={
+      Object {
+        "left": "10px",
+        "right": "500px",
+      }
+    }
+  >
+    <canvas
+      className="canvasStyle"
+    />
+    <canvas
+      className="canvasStyle"
+    />
+  </div>,
+  <div
+    className="infoPanelTab"
+  >
+    <svg
+      aria-hidden={true}
+      className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+      data-testid="ArrowForwardIosOutlinedIcon"
+      focusable="false"
+      onClick={[Function]}
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M6.23 20.23 8 22l10-10L8 2 6.23 3.77 14.46 12z"
+      />
+    </svg>
+  </div>,
+  <div
+    className="infoPanel"
+    style={
+      Object {
+        "marginLeft": 0,
+        "opacity": 1,
+      }
+    }
+  >
+    <h1>
+      Pseudocode
+    </h1>
+    <ul
+      className="list-group list-group-flush"
+      data-testid="kruskal-list-group"
+      onKeyDown={[Function]}
+    >
+      <li
+        className="list-group-item list-group-item-warning"
+        data-rr-ui-event-key={null}
+        onClick={[Function]}
+      >
+        Sort edges in non-decreasing order;
+      </li>
+      <li
+        className="list-group-item list-group-item-dark"
+        data-rr-ui-event-key={null}
+        onClick={[Function]}
+      >
+        While edges remain in queue
+      </li>
+      <li
+        className="list-group-item list-group-item-dark"
+        data-rr-ui-event-key={null}
+        onClick={[Function]}
+      >
+          e = edge with smallest weight; 
+      </li>
+      <li
+        className="list-group-item list-group-item-dark"
+        data-rr-ui-event-key={null}
+        onClick={[Function]}
+      >
+          If adding e to MST doesn't create cycle 
+      </li>
+      <li
+        className="list-group-item list-group-item-dark"
+        data-rr-ui-event-key={null}
+        onClick={[Function]}
+      >
+           Add e to MST;  
+      </li>
+      <li
+        className="list-group-item list-group-item-dark"
+        data-rr-ui-event-key={null}
+        onClick={[Function]}
+      >
+          Else 
+      </li>
+      <li
+        className="list-group-item list-group-item-dark"
+        data-rr-ui-event-key={null}
+        onClick={[Function]}
+      >
+           Reject e from MST;  
+      </li>
+      <li
+        className="list-group-item list-group-item-dark"
+        data-rr-ui-event-key={null}
+        onClick={[Function]}
+      >
+        We have found a minimum spanning tree with n-1 edges
+      </li>
+    </ul>
+    <h1>
+      Edges Queue
+    </h1>
+    <div
+      className="edgesQueueList"
+    >
+      <ol>
+        <li>
+          ((
+          0
+          ,
+          1
+          ). 
+          5
+          )
+        </li>
+        <li>
+          ((
+          0
+          ,
+          2
+          ). 
+          12
+          )
+        </li>
+        <li>
+          ((
+          2
+          ,
+          3
+          ). 
+          15
+          )
+        </li>
+        <li>
+          ((
+          3
+          ,
+          4
+          ). 
+          18
+          )
+        </li>
+        <li>
+          ((
+          0
+          ,
+          4
+          ). 
+          19
+          )
+        </li>
+        <li>
+          ((
+          1
+          ,
+          2
+          ). 
+          20
+          )
+        </li>
+        <li>
+          ((
+          2
+          ,
+          4
+          ). 
+          25
+          )
+        </li>
+      </ol>
+    </div>
+  </div>,
+  <div
+    className="fixedRowBottom row"
+  >
+    <div
+      className="bar col-3"
+      data-testid="slider-col"
+    >
+      <div
+        className="barText"
+        data-testid="slow"
+      >
+        Slow
+      </div>
+      <span
+        className="MuiSlider-colorPrimary MuiSlider-sizeMedium MuiSlider-root slider css-187mznn-MuiSlider-root"
+        data-testid="slider"
+        onMouseDown={[Function]}
+      >
+        <span
+          className="MuiSlider-rail css-14pt78w-MuiSlider-rail"
+        />
+        <span
+          className="MuiSlider-track css-1gv0vcd-MuiSlider-track"
+          style={
+            Object {
+              "left": "0%",
+              "width": "47.36842105263158%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark MuiSlider-markActive css-6cwnna-MuiSlider-mark"
+          data-index={0}
+          style={
+            Object {
+              "left": "0%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark MuiSlider-markActive css-6cwnna-MuiSlider-mark"
+          data-index={1}
+          style={
+            Object {
+              "left": "5.2631578947368425%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark MuiSlider-markActive css-6cwnna-MuiSlider-mark"
+          data-index={2}
+          style={
+            Object {
+              "left": "10.526315789473685%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark MuiSlider-markActive css-6cwnna-MuiSlider-mark"
+          data-index={3}
+          style={
+            Object {
+              "left": "15.789473684210526%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark MuiSlider-markActive css-6cwnna-MuiSlider-mark"
+          data-index={4}
+          style={
+            Object {
+              "left": "21.05263157894737%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark MuiSlider-markActive css-6cwnna-MuiSlider-mark"
+          data-index={5}
+          style={
+            Object {
+              "left": "26.31578947368421%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark MuiSlider-markActive css-6cwnna-MuiSlider-mark"
+          data-index={6}
+          style={
+            Object {
+              "left": "31.57894736842105%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark MuiSlider-markActive css-6cwnna-MuiSlider-mark"
+          data-index={7}
+          style={
+            Object {
+              "left": "36.8421052631579%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark MuiSlider-markActive css-6cwnna-MuiSlider-mark"
+          data-index={8}
+          style={
+            Object {
+              "left": "42.10526315789474%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark MuiSlider-markActive css-6cwnna-MuiSlider-mark"
+          data-index={9}
+          style={
+            Object {
+              "left": "47.36842105263158%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark css-1tfve6q-MuiSlider-mark"
+          data-index={10}
+          style={
+            Object {
+              "left": "52.63157894736842%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark css-1tfve6q-MuiSlider-mark"
+          data-index={11}
+          style={
+            Object {
+              "left": "57.89473684210526%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark css-1tfve6q-MuiSlider-mark"
+          data-index={12}
+          style={
+            Object {
+              "left": "63.1578947368421%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark css-1tfve6q-MuiSlider-mark"
+          data-index={13}
+          style={
+            Object {
+              "left": "68.42105263157895%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark css-1tfve6q-MuiSlider-mark"
+          data-index={14}
+          style={
+            Object {
+              "left": "73.6842105263158%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark css-1tfve6q-MuiSlider-mark"
+          data-index={15}
+          style={
+            Object {
+              "left": "78.94736842105263%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark css-1tfve6q-MuiSlider-mark"
+          data-index={16}
+          style={
+            Object {
+              "left": "84.21052631578948%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark css-1tfve6q-MuiSlider-mark"
+          data-index={17}
+          style={
+            Object {
+              "left": "89.47368421052632%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark css-1tfve6q-MuiSlider-mark"
+          data-index={18}
+          style={
+            Object {
+              "left": "94.73684210526316%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-mark css-1tfve6q-MuiSlider-mark"
+          data-index={19}
+          style={
+            Object {
+              "left": "100%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium MuiSlider-thumb css-eg0mwd-MuiSlider-thumb"
+          data-index={0}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          style={
+            Object {
+              "left": "47.36842105263158%",
+              "pointerEvents": undefined,
+            }
+          }
+        >
+          <input
+            aria-label="Speed"
+            aria-orientation="horizontal"
+            aria-valuemax={2000}
+            aria-valuemin={100}
+            aria-valuenow={1000}
+            data-index={0}
+            disabled={false}
+            max={2000}
+            min={100}
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            step={100}
+            style={
+              Object {
+                "border": 0,
+                "clip": "rect(0 0 0 0)",
+                "direction": "ltr",
+                "height": "100%",
+                "margin": -1,
+                "overflow": "hidden",
+                "padding": 0,
+                "position": "absolute",
+                "whiteSpace": "nowrap",
+                "width": "100%",
+              }
+            }
+            type="range"
+            value={1000}
+          />
+          <span
+            aria-hidden={true}
+            className="MuiSlider-valueLabel css-1kz0hui-MuiSlider-valueLabel"
+          >
+            <span
+              className="MuiSlider-valueLabelCircle"
+            >
+              <span
+                className="MuiSlider-valueLabelLabel"
+              >
+                <div>
+                  Speed: 
+                  5
+                </div>
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+      <div
+        className="barText"
+        data-testid="fast"
+      >
+        Fast
+      </div>
+    </div>
+    <div
+      className="bar col-6"
+      data-testid="playback-col"
+    >
+      <svg
+        aria-hidden={true}
+        className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1tvxjov-MuiSvgIcon-root"
+        data-testid="FirstPageIcon"
+        focusable="false"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseOut={[Function]}
+        onMouseOver={[Function]}
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M18.41 16.59 13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"
+        />
+      </svg>
+      <svg
+        aria-hidden={true}
+        className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1tvxjov-MuiSvgIcon-root"
+        data-testid="ArrowBackIosNewOutlinedIcon"
+        focusable="false"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseOut={[Function]}
+        onMouseOver={[Function]}
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M17.77 3.77 16 2 6 12l10 10 1.77-1.77L9.54 12z"
+        />
+      </svg>
+      <div
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseOut={[Function]}
+        onMouseOver={[Function]}
+      >
+        <svg
+          aria-hidden={true}
+          className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1tvxjov-MuiSvgIcon-root"
+          data-testid="PlayArrowIcon"
+          focusable="false"
+          onClick={[Function]}
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M8 5v14l11-7z"
+          />
+        </svg>
+      </div>
+      <svg
+        aria-hidden={true}
+        className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1tvxjov-MuiSvgIcon-root"
+        data-testid="ArrowForwardIosOutlinedIcon"
+        focusable="false"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseOut={[Function]}
+        onMouseOver={[Function]}
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M6.23 20.23 8 22l10-10L8 2 6.23 3.77 14.46 12z"
+        />
+      </svg>
+      <svg
+        aria-hidden={true}
+        className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1tvxjov-MuiSvgIcon-root"
+        data-testid="LastPageIcon"
+        focusable="false"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseOut={[Function]}
+        onMouseOver={[Function]}
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M5.59 7.41 10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z"
+        />
+      </svg>
+    </div>
+    <div
+      className="bar col-3"
+      data-testid="toggle-col"
+    >
+      <div
+        className="barToggle"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseOut={[Function]}
+        onMouseOver={[Function]}
+      >
+        <svg
+          aria-hidden={true}
+          className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1tvxjov-MuiSvgIcon-root"
+          data-testid="ToggleOffOutlinedIcon"
+          focusable="false"
+          onClick={[Function]}
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+          />
+        </svg>
+      </div>
+      <div
+        className="barText"
+        data-testid="hide-text"
+      >
+        Hide Original Graph
+      </div>
+    </div>
+  </div>,
+]
+`;

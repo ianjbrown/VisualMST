@@ -3,7 +3,7 @@ import { ListGroup } from "react-bootstrap";
 function PseudoCode(props) {
   if (props.algName === "Kruskal's Algorithm") {
     return (
-      <ListGroup variant="flush" as="ul">
+      <ListGroup data-testid="kruskal-list-group" variant="flush" as="ul">
         {props.algorithmState === 0 ? (
           <ListGroup.Item variant="warning" as="li">
             Sort edges in non-decreasing order;
@@ -80,7 +80,7 @@ function PseudoCode(props) {
     );
   } else if (props.algName === "Prim's Algorithm") {
     return (
-      <ListGroup variant="flush" as="ul">
+      <ListGroup data-testid="prim-list-group" variant="flush" as="ul">
         {props.algorithmState === 0 ? (
           <ListGroup.Item variant="warning" as="li">
             Initialise visited set with starting vertex

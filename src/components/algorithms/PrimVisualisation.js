@@ -9,8 +9,6 @@ import classes from "../../pages/Visualisation.module.css";
 
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 import { Row } from "react-bootstrap";
 
 function PrimVisualisationPage(props) {
@@ -30,12 +28,7 @@ function PrimVisualisationPage(props) {
   const expandCanvas = useSpring({
     left: Expanded ? "10px" : window.innerWidth / 8 + "px",
     right: Expanded ? "500px" :"500px" + window.innerWidth / 8 + "px",
-    // scale: Expanded ? (1, 1) : (1, 1),
   });
-  // const fadeMessage = useSpring({
-  //   opacity: 0,
-  // });
-
   const notInitialRender = useRef(false);
 
   let expandArrow;
@@ -53,27 +46,13 @@ function PrimVisualisationPage(props) {
     );
   }
 
-  let playPause;
-  let playPauseToolTip;
-  if (Paused) {
-    playPause = (
-      <PlayArrowIcon sx={{ fontSize: 60 }} onClick={playPauseHandler} />
-    );
-    playPauseToolTip = "Play Visualisation";
-  } else {
-    playPause = (
-      <PauseOutlinedIcon sx={{ fontSize: 60 }} onClick={playPauseHandler} />
-    );
-    playPauseToolTip = "Pause Visualisation";
-  }
-
   let algName = "Prim's Algorithm";
   let circles = [];
   let graph = props.graph;
   let MSTGraph = props.MSTGraph;
-  console.log(MSTGraph);
-  console.log(MSTGraph[5].length);
-  console.log(algorithmStep);
+  // console.log(MSTGraph);
+  // console.log(MSTGraph[5].length);
+  // console.log(algorithmStep);
   let minWeight = MSTGraph[4];
   let edgesQStages = edgesQueueStages;
   let edgesQ = Object.assign([], edgesQStages[algorithmStep]);
@@ -253,7 +232,7 @@ function PrimVisualisationPage(props) {
     var steps = MSTGraph[5];
     for (var i = 0; i < algorithmStep; i++) {
       var step = steps[i];
-      console.log(step);
+      // console.log(step);
       var p1 = step.elem[0];
       var p2 = step.elem[1];
       var weight = step.prio;
@@ -454,6 +433,10 @@ function PrimVisualisationPage(props) {
     setInverseSpeed(value);
   }
 
+  function pauseHandler() {
+    setPaused(!Paused);
+  }
+
   function firstHandler() {
     if (!Paused) return;
     setAlgorithmStep(0);
@@ -526,9 +509,6 @@ function PrimVisualisationPage(props) {
     setBackgroundOn(toggle);
   }
 
-  function playPauseHandler() {
-    setPaused(!Paused);
-  }
 
   async function sleep() {
     return new Promise((r) => setTimeout(r, 2100 - inverseSpeed));
@@ -579,8 +559,8 @@ function PrimVisualisationPage(props) {
 
       <Row className={classes.fixedRowBottom}>
         <PlayBack
-          symbolToolTip={playPauseToolTip}
-          symbol={playPause}
+          paused={Paused}
+          onPause={pauseHandler}
           onTimeoutChange={timeoutHandler}
           onFirst={firstHandler}
           onBack={backHandler}

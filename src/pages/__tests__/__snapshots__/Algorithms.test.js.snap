@@ -1,0 +1,275 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Algorithms page matches snapshot 1`] = `
+Array [
+  <nav
+    className="navbar navbar-expand-lg navbar-light bg-light"
+  >
+    <div
+      className="container"
+    >
+      <span
+        className="navbar-brand"
+      >
+        VisualMST
+      </span>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="ml-auto navbar-nav"
+          onKeyDown={[Function]}
+        >
+          <a
+            className="active nav-link"
+            data-rr-ui-event-key="/"
+            disabled={false}
+            href="/"
+            onClick={[Function]}
+            style={Object {}}
+          >
+            Home
+          </a>
+          <a
+            className="nav-link"
+            data-rr-ui-event-key="/about"
+            disabled={false}
+            href="/about"
+            onClick={[Function]}
+          >
+            About
+          </a>
+          <a
+            className="nav-link"
+            data-rr-ui-event-key="/algorithms"
+            disabled={false}
+            href="/algorithms"
+            onClick={[Function]}
+          >
+            Algorithms
+          </a>
+          <a
+            className="nav-link"
+            data-rr-ui-event-key="/contact"
+            disabled={false}
+            href="/contact"
+            onClick={[Function]}
+          >
+            Contact
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>,
+  <div
+    className="pt-5 container"
+    data-testid="algorithm-container"
+  >
+    <div
+      className="centered"
+      data-testid="centered-div"
+    >
+      <h2
+        className="pb-3"
+      >
+        Please select an algorithm for visualisation.
+      </h2>
+      <ul
+        className="mb-3 nav nav-tabs"
+        onKeyDown={[Function]}
+        role="tablist"
+      >
+        <li
+          className="nav-item"
+          role="presentation"
+        >
+          <button
+            aria-controls="controlled-tab-tabpane-kruskal"
+            aria-selected={true}
+            className="nav-link active"
+            data-rr-ui-event-key="kruskal"
+            disabled={false}
+            id="controlled-tab-tab-kruskal"
+            onClick={[Function]}
+            role="tab"
+            type="button"
+          >
+            Kruskal's
+          </button>
+        </li>
+        <li
+          className="nav-item"
+          role="presentation"
+        >
+          <button
+            aria-controls="controlled-tab-tabpane-prim"
+            className="nav-link"
+            data-rr-ui-event-key="prim"
+            disabled={false}
+            id="controlled-tab-tab-prim"
+            onClick={[Function]}
+            role="tab"
+            tabIndex={-1}
+            type="button"
+          >
+            Prim's
+          </button>
+        </li>
+      </ul>
+      <div
+        className="tab-content"
+      >
+        <div
+          aria-labelledby="controlled-tab-tab-kruskal"
+          className="tab-pane active"
+          id="controlled-tab-tabpane-kruskal"
+        >
+          <form
+            className=""
+            data-testid="form"
+            onSubmit={[Function]}
+          >
+            <div
+              className="mb-3"
+            >
+              <label
+                className="form-label"
+                htmlFor="vertices"
+              >
+                Number of Vertices
+              </label>
+              <input
+                className="form-control"
+                defaultValue="5"
+                id="vertices"
+                max="10"
+                min="5"
+                onChange={[Function]}
+                required={true}
+                type="number"
+              />
+            </div>
+            <div
+              className="mb-3"
+            >
+              <label
+                className="form-label"
+                htmlFor="select"
+              >
+                Generate or Import Graph?
+              </label>
+              <select
+                className="form-select"
+                id="select"
+                onChange={[Function]}
+              >
+                <option>
+                  Select
+                </option>
+                <option>
+                  Generate Graph
+                </option>
+                <option>
+                  Import Graph
+                </option>
+              </select>
+            </div>
+            <div
+              className="mb-3"
+            >
+              <button
+                className="mt-2 btn btn-primary"
+                disabled={false}
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+        <div
+          aria-labelledby="controlled-tab-tab-prim"
+          className="tab-pane"
+          id="controlled-tab-tabpane-prim"
+        >
+          <form
+            className=""
+            data-testid="form"
+            onSubmit={[Function]}
+          >
+            <div
+              className="mb-3"
+            >
+              <label
+                className="form-label"
+                htmlFor="vertices"
+              >
+                Number of Vertices
+              </label>
+              <input
+                className="form-control"
+                defaultValue="5"
+                id="vertices"
+                max="10"
+                min="5"
+                onChange={[Function]}
+                required={true}
+                type="number"
+              />
+            </div>
+            <div
+              className="mb-3"
+            >
+              <label
+                className="form-label"
+                htmlFor="select"
+              >
+                Generate or Import Graph?
+              </label>
+              <select
+                className="form-select"
+                id="select"
+                onChange={[Function]}
+              >
+                <option>
+                  Select
+                </option>
+                <option>
+                  Generate Graph
+                </option>
+                <option>
+                  Import Graph
+                </option>
+              </select>
+            </div>
+            <div
+              className="mb-3"
+            >
+              <button
+                className="mt-2 btn btn-primary"
+                disabled={false}
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;

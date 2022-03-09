@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Visualisation Form matches snapshot 1`] = `
+<form
+  className=""
+  data-testid="form"
+  onSubmit={[Function]}
+>
+  <div
+    className="mb-3"
+  >
+    <label
+      className="form-label"
+      htmlFor="vertices"
+    >
+      Number of Vertices
+    </label>
+    <input
+      className="form-control"
+      defaultValue="5"
+      id="vertices"
+      max="10"
+      min="5"
+      onChange={[Function]}
+      required={true}
+      type="number"
+    />
+  </div>
+  <div
+    className="mb-3"
+  >
+    <label
+      className="form-label"
+      htmlFor="select"
+    >
+      Generate or Import Graph?
+    </label>
+    <select
+      className="form-select"
+      id="select"
+      onChange={[Function]}
+    >
+      <option>
+        Select
+      </option>
+      <option>
+        Generate Graph
+      </option>
+      <option>
+        Import Graph
+      </option>
+    </select>
+  </div>
+  <div
+    className="mb-3"
+  >
+    <button
+      className="mt-2 btn btn-primary"
+      disabled={false}
+      type="submit"
+    >
+      Submit
+    </button>
+  </div>
+</form>
+`;

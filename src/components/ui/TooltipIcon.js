@@ -2,9 +2,36 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import PlayButtonToggle from "./PlayButtonToggle";
+import HideGraphToggle from "./HideGraphToggle";
+import classes from "./PlayBack.module.css";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 function TooltipIcon(props) {
+  function firstHandler() {
+    props.firstHandler();
+  }
+
+  function backHandler() {
+    props.backHandler();
+  }
+
+  function pauseHandler() {
+    props.pauseHandler();
+  }
+
+  function forwardHandler() {
+    props.forwardHandler();
+  }
+
+  function lastHandler() {
+    props.lastHandler();
+  }
+
+  function toggleHandler() {
+    props.toggleHandler();
+  }
+
   switch (props.id) {
     case "first":
       return (
@@ -18,7 +45,7 @@ function TooltipIcon(props) {
         >
           <FirstPageIcon
             sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
-            onClick={props.firstHandler}
+            onClick={firstHandler}
           />
         </OverlayTrigger>
       );
@@ -34,7 +61,7 @@ function TooltipIcon(props) {
         >
           <ArrowBackIosNewOutlinedIcon
             sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
-            onClick={props.backHandler}
+            onClick={backHandler}
           />
         </OverlayTrigger>
       );
@@ -44,11 +71,15 @@ function TooltipIcon(props) {
           placement={"top"}
           overlay={
             <Tooltip id={`tooltip-top`}>
-              <strong>{props.symbolToolTip}</strong>
+              <strong>
+                {props.paused ? "Play Visualisation" : "Pause Visualisation"}
+              </strong>
             </Tooltip>
           }
         >
-          {props.symbol}
+          <div>
+            <PlayButtonToggle paused={props.paused} onClick={pauseHandler} />
+          </div>
         </OverlayTrigger>
       );
     case "forward":
@@ -63,7 +94,7 @@ function TooltipIcon(props) {
         >
           <ArrowForwardIosOutlinedIcon
             sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
-            onClick={props.forwardHandler}
+            onClick={forwardHandler}
           />
         </OverlayTrigger>
       );
@@ -79,11 +110,33 @@ function TooltipIcon(props) {
         >
           <LastPageIcon
             sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
-            onClick={props.lastHandler}
+            onClick={lastHandler}
           />
         </OverlayTrigger>
       );
-    }
+    case "hide":
+      return (
+        <OverlayTrigger
+          placement={"top"}
+          overlay={
+            <Tooltip id={`tooltip-top`}>
+              <strong>
+                {props.backgroundOn
+                  ? "Hide original graph edges"
+                  : "Show original graph edges"}
+              </strong>
+            </Tooltip>
+          }
+        >
+          <div className={classes.barToggle}>
+            <HideGraphToggle
+              backgroundOn={props.backgroundOn}
+              toggleHandler={toggleHandler}
+            />
+          </div>
+        </OverlayTrigger>
+      );
+  }
 }
 
 export default TooltipIcon;

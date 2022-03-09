@@ -1,0 +1,190 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Contact Page matches snapshot 1`] = `
+Array [
+  <nav
+    className="navbar navbar-expand-lg navbar-light bg-light"
+  >
+    <div
+      className="container"
+    >
+      <span
+        className="navbar-brand"
+      >
+        VisualMST
+      </span>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="ml-auto navbar-nav"
+          onKeyDown={[Function]}
+        >
+          <a
+            className="active nav-link"
+            data-rr-ui-event-key="/"
+            disabled={false}
+            href="/"
+            onClick={[Function]}
+            style={Object {}}
+          >
+            Home
+          </a>
+          <a
+            className="nav-link"
+            data-rr-ui-event-key="/about"
+            disabled={false}
+            href="/about"
+            onClick={[Function]}
+          >
+            About
+          </a>
+          <a
+            className="nav-link"
+            data-rr-ui-event-key="/algorithms"
+            disabled={false}
+            href="/algorithms"
+            onClick={[Function]}
+          >
+            Algorithms
+          </a>
+          <a
+            className="nav-link"
+            data-rr-ui-event-key="/contact"
+            disabled={false}
+            href="/contact"
+            onClick={[Function]}
+          >
+            Contact
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>,
+  <div
+    className="pt-5 container-fluid"
+    data-testid="contact-container"
+  >
+    <div
+      className="centered"
+      data-testid="centered-div"
+    >
+      <h1>
+        Evaluation
+      </h1>
+      <div
+        style={
+          Object {
+            "marginBottom": "40px",
+            "marginTop": "15px",
+          }
+        }
+      >
+        <p>
+          I am currently collecting feedback on this application. If you have a few minutes please download the briefing sheet below and complete the Google form. I would greatly appreciate it!
+        </p>
+        <p>
+          <a
+            href="VisualMST_Eval.pdf"
+          >
+            Evaluation Briefing Sheet.
+          </a>
+        </p>
+      </div>
+      <h1>
+        Contact
+      </h1>
+      <p
+        style={
+          Object {
+            "marginTop": "15px",
+          }
+        }
+      >
+        If you have any further comments about the application, please complete the short form below.
+      </p>
+      <form
+        action="https://public.herotofu.com/v1/755bbcc0-90a6-11ec-8462-6960be7ce578"
+        className=""
+        data-testid="form"
+        method="POST"
+        onSubmit={[Function]}
+        target="_blank"
+      >
+        <div
+          className="mb-3"
+        >
+          <label
+            className="form-label"
+            htmlFor="name"
+          >
+            Name:
+          </label>
+          <input
+            className="form-control"
+            id="name"
+            name="name"
+            placeholder="Name"
+          />
+        </div>
+        <div
+          className="mb-3"
+        >
+          <label
+            className="form-label"
+            htmlFor="email"
+          >
+            Email:
+          </label>
+          <input
+            className="form-control"
+            id="email"
+            name="email"
+            placeholder="name@example.com"
+            type="email"
+          />
+        </div>
+        <div
+          className="mb-1"
+        >
+          <label
+            className="form-label"
+            htmlFor="message"
+          >
+            Your Message:
+          </label>
+          <textarea
+            className="form-control"
+            id="message"
+            name="message"
+            placeholder="Enter message here..."
+            rows={3}
+          />
+        </div>
+        <div>
+          <button
+            className="mt-2 btn btn-primary"
+            disabled={false}
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>,
+]
+`;

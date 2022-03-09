@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pause matches snapshot 1`] = `
+<svg
+  aria-hidden={true}
+  className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1tvxjov-MuiSvgIcon-root"
+  data-testid="PauseOutlinedIcon"
+  focusable="false"
+  onClick={[Function]}
+  viewBox="0 0 24 24"
+>
+  <path
+    d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"
+  />
+</svg>
+`;
+
+exports[`Play matches snapshot 1`] = `
+<svg
+  aria-hidden={true}
+  className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1tvxjov-MuiSvgIcon-root"
+  data-testid="PlayArrowIcon"
+  focusable="false"
+  onClick={[Function]}
+  viewBox="0 0 24 24"
+>
+  <path
+    d="M8 5v14l11-7z"
+  />
+</svg>
+`;

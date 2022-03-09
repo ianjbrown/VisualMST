@@ -9,8 +9,6 @@ import classes from "../../pages/Visualisation.module.css";
 
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 import { Row } from "react-bootstrap";
 
 function KruskalVisualisationPage(props) {
@@ -28,17 +26,9 @@ function KruskalVisualisationPage(props) {
     marginLeft: Expanded ? 0 : 470,
   });
   const expandCanvas = useSpring({
-    // to: async (next, cancel) => {
-    //   await next({opacity: 1})
-    //   await next({opacity: 0})
-    // }
     left: Expanded ? "10px" : window.innerWidth / 8 + "px",
     right: Expanded ? "500px" : "500px" + window.innerWidth / 8 + "px",
-    // scale: Expanded ? (1, 1) : (1, 1),
   });
-  // const fadeMessage = useSpring({
-  //   opacity: 0,
-  // });
 
   const notInitialRender = useRef(false);
 
@@ -55,26 +45,6 @@ function KruskalVisualisationPage(props) {
         onClick={expandHandler}
       ></ArrowBackIosNewOutlinedIcon>
     );
-  }
-
-  let playPause;
-  let playPauseToolTip;
-  if (Paused) {
-    playPause = (
-      <PlayArrowIcon
-        sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
-        onClick={playPauseHandler}
-      />
-    );
-    playPauseToolTip = "Play Visualisation";
-  } else {
-    playPause = (
-      <PauseOutlinedIcon
-        sx={{ "&:hover": { cursor: "pointer" }, fontSize: 60 }}
-        onClick={playPauseHandler}
-      />
-    );
-    playPauseToolTip = "Pause Visualisation";
   }
   
   let algName = "Kruskal's Algorithm";
@@ -157,6 +127,7 @@ function KruskalVisualisationPage(props) {
   function prepareCanvas() {
     const canvas = canvasRef.current;
     const canvas2 = canvasRef2.current;
+    
     canvas.width = 1920;
     canvas.height = 969;
     canvas2.width = 1920;
@@ -357,6 +328,10 @@ function KruskalVisualisationPage(props) {
     setInverseSpeed(value);
   }
 
+  function pauseHandler() {
+    setPaused(!Paused);
+  }
+
   function firstHandler() {
     if (!Paused) return;
     setAlgorithmStep(0);
@@ -416,9 +391,6 @@ function KruskalVisualisationPage(props) {
     setBackgroundOn(toggle);
   }
 
-  function playPauseHandler() {
-    setPaused(!Paused);
-  }
 
   async function sleep() {
     return new Promise((r) => setTimeout(r, 2100 - inverseSpeed));
@@ -467,8 +439,8 @@ function KruskalVisualisationPage(props) {
 
       <Row className={classes.fixedRowBottom}>
         <PlayBack
-          symbolToolTip={playPauseToolTip}
-          symbol={playPause}
+          paused={Paused}
+          onPause={pauseHandler}
           onTimeoutChange={timeoutHandler}
           onFirst={firstHandler}
           onBack={backHandler}

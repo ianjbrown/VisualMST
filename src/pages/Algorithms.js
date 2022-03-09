@@ -4,7 +4,7 @@ import Centered from "../components/ui/Centered";
 import VisualisationPage from "./Visualisation";
 import MainNavigation from "../components/layout/MainNavigation";
 import Graph from "../datastructures/Graph";
-import NewGraphForm from "../components/algorithms/VisulisationForm";
+import VisualisationForm from "../components/ui/VisualisationForm";
 import { Container, Tabs, Tab, Alert } from "react-bootstrap";
 import five from "../datastructures/text/5.txt";
 import six from "../datastructures/text/6.txt";
@@ -45,16 +45,29 @@ function AlgorithmsPage() {
   async function generateHelper() {
     var fileName;
     switch (noOfVertices) {
-      case "5": fileName = five; break;
-      case "6": fileName = six; break;
-      case "7": fileName = seven; break;
-      case "8": fileName = eight; break;
-      case "9": fileName = nine; break;
-      case "10": fileName = ten; break;
+      case "5":
+        fileName = five;
+        break;
+      case "6":
+        fileName = six;
+        break;
+      case "7":
+        fileName = seven;
+        break;
+      case "8":
+        fileName = eight;
+        break;
+      case "9":
+        fileName = nine;
+        break;
+      case "10":
+        fileName = ten;
+        break;
     }
     let response = await fetch(fileName);
     let data = await response.text();
     var lines = data.split(/[\r\n]+/g);
+    console.log(lines);
     var g = new Graph(noOfVertices);
     g.generateGraph(lines);
     setSelectedGraph(g);
@@ -106,19 +119,18 @@ function AlgorithmsPage() {
   }
 
   return (
-    <div>
+    <>
       <Switch>
         <Route path={`${match.path}/:algorithmId`}>
           <VisualisationPage
             graph={selectedGraph}
             MSTGraph={selectedMSTGraph}
             alg={key}
-            startingVertex={startingVertex}
           />
         </Route>
         <Route exact path={match.path}>
           <MainNavigation />
-          <Container className="pt-5">
+          <Container data-testid="algorithm-container" className="pt-5">
             <Centered>
               {importError && (
                 <Alert variant="danger" dismissable>
@@ -139,7 +151,7 @@ function AlgorithmsPage() {
                 }}
               >
                 <Tab eventKey="kruskal" title="Kruskal's">
-                  <NewGraphForm
+                  <VisualisationForm
                     genImp={genImp}
                     onVerticesChange={handleVerticesChange}
                     onGenImpChange={handleGenImpChange}
@@ -149,7 +161,7 @@ function AlgorithmsPage() {
                   />
                 </Tab>
                 <Tab eventKey="prim" title="Prim's">
-                  <NewGraphForm
+                  <VisualisationForm
                     genImp={genImp}
                     noOfVertices={noOfVertices}
                     onVerticesChange={handleVerticesChange}
@@ -165,7 +177,7 @@ function AlgorithmsPage() {
           </Container>
         </Route>
       </Switch>
-    </div>
+    </>
   );
 }
 

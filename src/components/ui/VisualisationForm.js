@@ -1,6 +1,6 @@
 import { Form, Button } from "react-bootstrap";
 
-function NewGraphForm(props) {
+function VisualisationForm(props) {
 
   function verticesChangeHandler(event) {
     event.preventDefault();
@@ -28,9 +28,9 @@ function NewGraphForm(props) {
   }
 
   return (
-    <Form onSubmit={submitHandler}>
+    <Form data-testid="form" onSubmit={submitHandler}>
       <Form.Group className="mb-3">
-        <Form.Label>Number of Vertices</Form.Label>
+        <Form.Label htmlFor="vertices">Number of Vertices</Form.Label>
         <Form.Control
           onChange={verticesChangeHandler}
           type="number"
@@ -43,7 +43,7 @@ function NewGraphForm(props) {
       </Form.Group>
       {props.alg === "prim" && (
         <Form.Group className="mb-3">
-          <Form.Label>Select Starting Vertex</Form.Label>
+          <Form.Label htmlFor="startingvertex">Select Starting Vertex</Form.Label>
           <Form.Control
             onChange={startingChangeHandler}
             type="number"
@@ -56,8 +56,8 @@ function NewGraphForm(props) {
         </Form.Group>
       )}
       <Form.Group className="mb-3">
-        <Form.Label>Generate or Import Graph?</Form.Label>
-        <Form.Select onChange={genImpChangeHandler}>
+        <Form.Label htmlFor="select">Generate or Import Graph?</Form.Label>
+        <Form.Select id="select" onChange={genImpChangeHandler}>
           <option>Select</option>
           <option>Generate Graph</option>
           <option>Import Graph</option>
@@ -65,8 +65,8 @@ function NewGraphForm(props) {
       </Form.Group>
       {props.genImp === "Import Graph" && (
         <Form.Group className="mb-3">
-          <Form.Label>Graph File</Form.Label>
-          <Form.Control type="file" name="file" onChange={fileChangeHandler} />
+          <Form.Label htmlFor="file">Graph File</Form.Label>
+          <Form.Control id="file" type="file" name="file" onChange={fileChangeHandler} />
         </Form.Group>
       )}
       <Form.Group className="mb-3">
@@ -78,4 +78,4 @@ function NewGraphForm(props) {
   );
 }
 
-export default NewGraphForm;
+export default VisualisationForm;

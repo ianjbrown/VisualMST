@@ -9,7 +9,6 @@ function VisualisationPage(props) {
       <KruskalVisualisationPage
         graph={graph}
         MSTGraph={MSTGraph}
-        algName={props.algName}
       />
     );
   } else if (props.alg === "prim") {
@@ -17,8 +16,6 @@ function VisualisationPage(props) {
       <PrimVisualisationPage
         graph={graph}
         MSTGraph={MSTGraph}
-        algName={props.algName}
-        startingVertex={props.startingVertex}
       />
     );
   }

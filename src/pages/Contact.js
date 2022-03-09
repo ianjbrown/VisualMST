@@ -12,19 +12,11 @@ function ContactPage() {
       setSubmitted(true);
     }, 100);
   }
-  //   if (submitted) {
-  //     return (
-  //       <>
-  //         <h2>Thank you!</h2>
-  //         <div>Your feedback is greatly appreciated.</div>
-  //       </>
-  //     );
-  //   }
 
   return (
     <>
       <MainNavigaton />
-      <Container fluid className="pt-5">
+      <Container data-testid="contact-container" fluid className="pt-5">
         <Centered>
           {submitted && (
             <Alert variant="success">Thank you for your feedback!</Alert>
@@ -44,6 +36,7 @@ function ContactPage() {
             please complete the short form below.
           </p>
           <Form
+            data-testid="form"
             action={
               "https://public.herotofu.com/v1/755bbcc0-90a6-11ec-8462-6960be7ce578"
             }
@@ -52,24 +45,26 @@ function ContactPage() {
             target="_blank"
           >
             <Form.Group className="mb-3">
-              <Form.Label>Name:</Form.Label>
-              <Form.Control placeholder="Name" name="name" />
+              <Form.Label htmlFor="name">Name:</Form.Label>
+              <Form.Control id="name" placeholder="Name" name="name" />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Email:</Form.Label>
+              <Form.Label htmlFor="email">Email:</Form.Label>
               <Form.Control
                 placeholder="name@example.com"
+                id="email"
                 type="email"
                 name="email"
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-1">
-              <Form.Label>Your Message:</Form.Label>
+              <Form.Label htmlFor="message">Your Message:</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
                 placeholder="Enter message here..."
                 name="message"
+                id="message"
               />
             </Form.Group>
             <Form.Group>

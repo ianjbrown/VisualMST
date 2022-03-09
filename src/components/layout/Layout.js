@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 
 function Layout(props) {
   return (
-    <Container fluid>
+    <Container fluid data-testid="layout">
       {props.children}
     </Container>
   );
