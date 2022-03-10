@@ -19,7 +19,7 @@ function PrimVisualisationPage(props) {
   const [Expanded, setExpanded] = useState(true);
   const [inverseSpeed, setInverseSpeed] = useState(1000);
 
-  const edgesQueueStages = JSON.parse(JSON.stringify(props.MSTGraph[2]));
+  const edgesQueueStages = JSON.parse(JSON.stringify(props.MSTGraph.edgesQueues));
 
   const expandInfo = useSpring({
     opacity: Expanded ? 1 : 0,
@@ -53,7 +53,7 @@ function PrimVisualisationPage(props) {
   // console.log(MSTGraph);
   // console.log(MSTGraph[5].length);
   // console.log(algorithmStep);
-  let minWeight = MSTGraph[4];
+  let minWeight = MSTGraph.minWeight;
   let edgesQStages = edgesQueueStages;
   let edgesQ = Object.assign([], edgesQStages[algorithmStep]);
   let edgesQueuePrint;
@@ -73,7 +73,7 @@ function PrimVisualisationPage(props) {
   }
 
   const AlgorithmStates = [
-    `Initialize visited set with starting vertex = {${MSTGraph[3][0]}}`,
+    `Initialize visited set with starting vertex = {${MSTGraph.visiteds[0]}}`,
     `Add connecting edges to queue.`,
     "While visited doesn't contain all vertices",
     `Select edge with smallest weight, ((${edge[0]},${edge[1]}),${edge[2]})`,
@@ -82,7 +82,7 @@ function PrimVisualisationPage(props) {
     "Else",
     "Ignore edge",
     `Found spanning tree with n-1 (${
-      MSTGraph[0].AdjList.size - 1
+      MSTGraph.MST.AdjList.size - 1
     }) edges and minimum weight ${minWeight}`,
   ];
 
@@ -100,7 +100,7 @@ function PrimVisualisationPage(props) {
 
   function edgeInMST(edge) {
     let found;
-    MSTGraph[1].forEach((MSTEdge) => {
+    MSTGraph.edgeSequence.forEach((MSTEdge) => {
       if (
         edge.elem[0] === MSTEdge[0] &&
         edge.elem[1] === MSTEdge[1] &&
@@ -148,7 +148,7 @@ function PrimVisualisationPage(props) {
     const ctx = canvas.getContext("2d");
     for (var i = 0; i < graph.noOfVertices; i++) {
       let colour;
-      if (MSTGraph[3][algorithmStep].includes(i)) colour = "orange";
+      if (MSTGraph.visiteds[algorithmStep].includes(i)) colour = "orange";
       else colour = "black";
       var circle = new Circle(
         400 + 300 * Math.cos((i * 2 * Math.PI) / graph.noOfVertices),
@@ -229,7 +229,7 @@ function PrimVisualisationPage(props) {
     drawCircles();
     if (backgroundOn) drawGraph(graph.AdjList);
     drawLegend();
-    var steps = MSTGraph[5];
+    var steps = MSTGraph.edgeCompSequence;
     for (var i = 0; i < algorithmStep; i++) {
       var step = steps[i];
       // console.log(step);
@@ -441,7 +441,7 @@ function PrimVisualisationPage(props) {
     if (!Paused) return;
     setAlgorithmStep(0);
     setAlgorithmState(0);
-    edgesQ = JSON.parse(JSON.stringify(props.MSTGraph[2][0]));
+    edgesQ = JSON.parse(JSON.stringify(props.MSTGraph.edgesQueues[0]));
   }
 
   function backHandler() {
@@ -449,7 +449,7 @@ function PrimVisualisationPage(props) {
     if (algorithmState === 8) {
       setAlgorithmState(2);
     } else if (algorithmState === 2 && algorithmStep > 0) {
-      let recoverEdge = MSTGraph[5][algorithmStep - 1];
+      let recoverEdge = MSTGraph.edgeCompSequence[algorithmStep - 1];
       edgesQ = edgesQStages[algorithmStep - 1];
       setAlgorithmStep(algorithmStep - 1);
       if (edgeInMST(recoverEdge)) {
@@ -473,7 +473,7 @@ function PrimVisualisationPage(props) {
     // console.log(graph.noOfVertices);
     if (
       algorithmState === 2 &&
-      MSTGraph[3][algorithmStep].length === parseInt(graph.noOfVertices)
+      MSTGraph.visiteds[algorithmStep].length === parseInt(graph.noOfVertices)
     ) {
       setAlgorithmState(8);
       setPaused(true);
@@ -500,7 +500,7 @@ function PrimVisualisationPage(props) {
 
   function lastHandler() {
     if (!Paused) return;
-    setAlgorithmStep(MSTGraph[5].length);
+    setAlgorithmStep(MSTGraph.edgeCompSequence.length);
     setAlgorithmState(8);
     edgesQ = edgesQStages[edgesQStages.length - 1];
   }

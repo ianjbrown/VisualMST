@@ -67,7 +67,7 @@ function AlgorithmsPage() {
     let response = await fetch(fileName);
     let data = await response.text();
     var lines = data.split(/[\r\n]+/g);
-    console.log(lines);
+    // console.log(lines);
     var g = new Graph(noOfVertices);
     g.generateGraph(lines);
     setSelectedGraph(g);

@@ -1,6 +1,7 @@
 import { Random } from "random-js";
 import PriorityQueue from "./PriorityQueue.js";
 import UnionFind from "./UnionFind.js";
+import AlgData from "./AlgData.js";
 // create a graph class
 class Graph {
   // constructor
@@ -120,10 +121,9 @@ class Graph {
     }
 
     for (i = 0; i < lines.length; i++) {
-      const edge = lines[i].split(",")
-      this.addEdge(parseInt(edge[0]), parseInt(edge[1]), random.integer(1,30));
+      const edge = lines[i].split(",");
+      this.addEdge(parseInt(edge[0]), parseInt(edge[1]), random.integer(1, 30));
     }
-
   }
 
   // Generate random graph, app now generates predetermined graphs from backend instead.
@@ -222,7 +222,8 @@ class Graph {
       edgesQueues.push(Object.assign([], edgesQueue.items));
       edgeCompSequence.push(nextEdge);
     }
-    return [MST, edgeSequence, edgesQueues, minWeight, edgeCompSequence];
+    return new AlgData(MST, edgeSequence, edgesQueues, minWeight, edgeCompSequence);
+    // return [MST, edgeSequence, edgesQueues, minWeight, edgeCompSequence];
   }
 
   prim(startingVertexString) {
@@ -279,14 +280,22 @@ class Graph {
 
       MST.setNoOfVertices(MST.AdjList.size);
     }
-    return [
+    return new AlgData(
       MST,
       edgeSequence,
       edgesQueues,
-      visiteds,
       minWeight,
       edgeCompSequence,
-    ];
+      visiteds,
+    );
+    // return [
+    //   MST,
+    //   edgeSequence,
+    //   edgesQueues,
+    //   visiteds,
+    //   minWeight,
+    //   edgeCompSequence,
+    // ];
   }
 
   // this helper function allows us to sort adjlists by numerical node value

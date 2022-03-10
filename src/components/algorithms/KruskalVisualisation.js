@@ -19,7 +19,7 @@ function KruskalVisualisationPage(props) {
   const [Expanded, setExpanded] = useState(true);
   const [inverseSpeed, setInverseSpeed] = useState(1000);
 
-  const edgesQueueStages = JSON.parse(JSON.stringify(props.MSTGraph[2]));
+  const edgesQueueStages = JSON.parse(JSON.stringify(props.MSTGraph.edgesQueues));
 
   const expandInfo = useSpring({
     opacity: Expanded ? 1 : 0,
@@ -50,9 +50,10 @@ function KruskalVisualisationPage(props) {
   let algName = "Kruskal's Algorithm";
   let circles = [];
   let graph = props.graph;
+  console.log(graph);
   let noOfVertices = graph.noOfVertices;
   let MSTGraph = props.MSTGraph;
-  let minWeight = MSTGraph[3];
+  let minWeight = MSTGraph.minWeight;
   let edgesQStages = edgesQueueStages;
   let edgesQ = Object.assign([], edgesQStages[algorithmStep]);
   let edgesQueuePrint;
@@ -81,7 +82,7 @@ function KruskalVisualisationPage(props) {
     "Else",
     "Reject e from MST",
     `Found spanning tree with n-1 (${
-      MSTGraph[0].AdjList.size - 1
+      MSTGraph.MST.AdjList.size - 1
     }) edges and minimum weight ${minWeight}`,
   ];
 
@@ -99,7 +100,7 @@ function KruskalVisualisationPage(props) {
 
   function edgeInMST(edge) {
     let found;
-    MSTGraph[1].forEach((MSTEdge) => {
+    MSTGraph.edgeSequence.forEach((MSTEdge) => {
       if (
         edge.elem[0] === MSTEdge[0] &&
         edge.elem[1] === MSTEdge[1] &&
@@ -113,7 +114,7 @@ function KruskalVisualisationPage(props) {
 
   function foundTree() {
     let count = 0;
-    MSTGraph[4].slice(0, algorithmStep).forEach((edge) => {
+    MSTGraph.edgeCompSequence.slice(0, algorithmStep).forEach((edge) => {
       if (edgeInMST(edge)) {
         count++;
       }
@@ -223,7 +224,7 @@ function KruskalVisualisationPage(props) {
     drawCircles();
     if (backgroundOn) drawGraph(graph.AdjList);
 
-    var steps = MSTGraph[4];
+    var steps = MSTGraph.edgeCompSequence;
     for (var i = 0; i < algorithmStep; i++) {
       var step = steps[i];
       var p1 = step.elem[0];
@@ -336,7 +337,7 @@ function KruskalVisualisationPage(props) {
     if (!Paused) return;
     setAlgorithmStep(0);
     setAlgorithmState(0);
-    edgesQ = JSON.parse(JSON.stringify(props.MSTGraph[2][0]));
+    edgesQ = JSON.parse(JSON.stringify(props.MSTGraph.edgesQueues[0]));
   }
 
   function backHandler() {
@@ -344,7 +345,7 @@ function KruskalVisualisationPage(props) {
     if (algorithmState === 7) {
       setAlgorithmState(1);
     } else if (algorithmState === 1 && algorithmStep > 0) {
-      let recoverEdge = MSTGraph[4][algorithmStep - 1];
+      let recoverEdge = MSTGraph.edgeCompSequence[algorithmStep - 1];
       edgesQ = edgesQStages[algorithmStep - 1];
       setAlgorithmStep(algorithmStep - 1);
       if (edgeInMST(recoverEdge)) {
@@ -382,7 +383,7 @@ function KruskalVisualisationPage(props) {
 
   function lastHandler() {
     if (!Paused) return;
-    setAlgorithmStep(MSTGraph[4].length);
+    setAlgorithmStep(MSTGraph.edgeCompSequence.length);
     setAlgorithmState(7);
     edgesQ = edgesQStages[edgesQStages.length - 1];
   }
