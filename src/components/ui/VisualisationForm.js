@@ -48,7 +48,7 @@ function VisualisationForm(props) {
             onChange={startingChangeHandler}
             type="number"
             min={0}
-            max={parseInt(props.noOfVertices) - 1}
+            max={props.noOfVertices - 1}
             required
             id="startingvertex"
             defaultValue="0"

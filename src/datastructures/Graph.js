@@ -226,11 +226,10 @@ class Graph {
     // return [MST, edgeSequence, edgesQueues, minWeight, edgeCompSequence];
   }
 
-  prim(startingVertexString) {
+  prim(startingVertex) {
     var edgesQueues = [];
     var visiteds = [];
     var minWeight = 0;
-    var startingVertex = parseInt(startingVertexString);
     /* create data structures... new graph for MST, 
     queue for edges sorted by weight, and array of visited vertices */
     var edgeSequence = [];
@@ -244,7 +243,7 @@ class Graph {
     MST.addVertex(startingVertex);
 
     // add edges of the starting node to queue
-    for (const adjacent of this.AdjList.get(parseInt(startingVertex))) {
+    for (const adjacent of this.AdjList.get(startingVertex)) {
       edgesQueue.enqueue([startingVertex, adjacent.node], adjacent.weight);
     }
     visiteds.push(Object.assign([], visited));

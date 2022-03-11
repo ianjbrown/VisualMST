@@ -14,8 +14,8 @@ import nine from "../datastructures/text/9.txt";
 import ten from "../datastructures/text/10.txt";
 
 function AlgorithmsPage() {
-  const [noOfVertices, setNoOfVertices] = useState("5");
-  const [startingVertex, setStartingVertex] = useState("0");
+  const [noOfVertices, setNoOfVertices] = useState(5);
+  const [startingVertex, setStartingVertex] = useState(0);
   const [genImp, setGenImp] = useState();
   const [selectedFile, setSelectedFile] = useState();
   const [selectedGraph, setSelectedGraph] = useState();
@@ -27,11 +27,11 @@ function AlgorithmsPage() {
   const match = useRouteMatch();
 
   function handleVerticesChange(value) {
-    setNoOfVertices(value);
+    setNoOfVertices(parseInt(value));
   }
 
   function handleStartingChange(value) {
-    setStartingVertex(value);
+    setStartingVertex(parseInt(value));
   }
 
   function handleGenImpChange(value) {
@@ -45,22 +45,22 @@ function AlgorithmsPage() {
   async function generateHelper() {
     var fileName;
     switch (noOfVertices) {
-      case "5":
+      case 5:
         fileName = five;
         break;
-      case "6":
+      case 6:
         fileName = six;
         break;
-      case "7":
+      case 7:
         fileName = seven;
         break;
-      case "8":
+      case 8:
         fileName = eight;
         break;
-      case "9":
+      case 9:
         fileName = nine;
         break;
-      case "10":
+      case 10:
         fileName = ten;
         break;
     }

@@ -50,9 +50,6 @@ function PrimVisualisationPage(props) {
   let circles = [];
   let graph = props.graph;
   let MSTGraph = props.MSTGraph;
-  // console.log(MSTGraph);
-  // console.log(MSTGraph[5].length);
-  // console.log(algorithmStep);
   let minWeight = MSTGraph.minWeight;
   let edgesQStages = edgesQueueStages;
   let edgesQ = Object.assign([], edgesQStages[algorithmStep]);
@@ -232,7 +229,6 @@ function PrimVisualisationPage(props) {
     var steps = MSTGraph.edgeCompSequence;
     for (var i = 0; i < algorithmStep; i++) {
       var step = steps[i];
-      // console.log(step);
       var p1 = step.elem[0];
       var p2 = step.elem[1];
       var weight = step.prio;
@@ -414,13 +410,6 @@ function PrimVisualisationPage(props) {
           "black"
         );
       }
-      // ctx.beginPath();
-      // ctx.strokeStyle = "lightgrey";
-      // ctx.lineWidth = 1;
-      // ctx.moveTo(circles[edgesQ[0].elem[0]].x, circles[edgesQ[0].elem[0]].y);
-      // ctx.lineTo(circles[edgesQ[0].elem[1]].x, circles[edgesQ[0].elem[1]].y);
-      // ctx.stroke();
-      // drawEdgeWeights(circles[edgesQ[0].elem[0]], circles[edgesQ[0].elem[1]], edgesQ[0].prio, "lightgrey")
     }
   }
   function expandHandler() {
@@ -429,7 +418,6 @@ function PrimVisualisationPage(props) {
   }
 
   function timeoutHandler(value) {
-    // console.log(value);
     setInverseSpeed(value);
   }
 
@@ -465,30 +453,22 @@ function PrimVisualisationPage(props) {
   }
   function forwardStep() {
     if (algorithmState === 8) {
-      // console.log("0");
       return;
     }
-    // console.log(algorithmStep);
-    // console.log(MSTGraph[3][algorithmStep].length);
-    // console.log(graph.noOfVertices);
     if (
       algorithmState === 2 &&
-      MSTGraph.visiteds[algorithmStep].length === parseInt(graph.noOfVertices)
+      MSTGraph.visiteds[algorithmStep].length === graph.noOfVertices
     ) {
       setAlgorithmState(8);
       setPaused(true);
     } else if (algorithmState === 4 && !edgeInMST(edgesQ[0])) {
-      // console.log("2");
       setAlgorithmState(6);
     } else if (algorithmState === 4 && edgeInMST(edgesQ[0])) {
-      // console.log("HIIIIII");
       setAlgorithmState(algorithmState + 1);
     } else if (algorithmState === 5 || algorithmState === 7) {
-      // console.log("3");
       setAlgorithmStep(algorithmStep + 1);
       setAlgorithmState(2);
     } else {
-      // console.log("4");
       setAlgorithmState(algorithmState + 1);
     }
   }
@@ -515,7 +495,6 @@ function PrimVisualisationPage(props) {
   }
 
   async function play() {
-    // // console.log(inverseSpeed);
     await sleep();
     forwardStep();
   }
@@ -524,7 +503,6 @@ function PrimVisualisationPage(props) {
     prepareCanvas();
     drawCircles();
     drawGraph(graph.AdjList);
-    // setEdgesQueue(JSON.parse(JSON.stringify(MSTGraph[2])));
   }, []);
 
   useEffect(() => {
