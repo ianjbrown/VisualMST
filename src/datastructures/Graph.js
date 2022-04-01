@@ -4,8 +4,6 @@ import UnionFind from "./UnionFind.js";
 import AlgData from "./AlgData.js";
 // create a graph class
 class Graph {
-  // constructor
-  // initialize no of vertices at 0 and adjacencylist as an empty map
   constructor(noOfVertices) {
     this.noOfVertices = noOfVertices;
     this.AdjList = new Map();
@@ -37,7 +35,6 @@ class Graph {
     if (uAdjList === undefined || vAdjList === undefined) return false;
     // no duplicate edges
     for (var i in uAdjList) if (uAdjList[i].node === v) return false;
-
     // no self-connecting edges
     if (u === v) return false;
     // undirected graph so push onto both

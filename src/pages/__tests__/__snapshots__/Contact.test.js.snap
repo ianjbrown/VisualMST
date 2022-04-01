@@ -178,6 +178,7 @@ Array [
           <button
             className="mt-2 btn btn-primary"
             disabled={false}
+            name="Submit"
             type="submit"
           >
             Submit

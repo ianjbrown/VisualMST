@@ -68,7 +68,7 @@ function ContactPage() {
               />
             </Form.Group>
             <Form.Group>
-              <Button className="mt-2" variant="primary" type="submit">
+              <Button className="mt-2" variant="primary" type="submit" name="Submit">
                 Submit
               </Button>
             </Form.Group>

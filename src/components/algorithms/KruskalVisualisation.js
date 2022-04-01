@@ -50,7 +50,6 @@ function KruskalVisualisationPage(props) {
   let algName = "Kruskal's Algorithm";
   let circles = [];
   let graph = props.graph;
-  console.log(graph);
   let noOfVertices = graph.noOfVertices;
   let MSTGraph = props.MSTGraph;
   let minWeight = MSTGraph.minWeight;
