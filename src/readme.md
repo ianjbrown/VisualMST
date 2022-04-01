@@ -37,6 +37,8 @@ This installs the required dependencies to run the app
 ```
 npm start
 ```
+It should then be accessible on 
+http://localhost:3000/
 
 ### Test steps
 
