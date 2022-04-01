@@ -8,7 +8,7 @@ import {
 import "@testing-library/jest-dom/";
 import userEvent from "@testing-library/user-event";
 import renderer from "react-test-renderer";
-import evalsheet from "../../VisualMST_Eval.pdf";
+import evalsheet from "../../images/VisualMST_Eval.pdf";
 
 afterEach(() => {
   cleanup();
