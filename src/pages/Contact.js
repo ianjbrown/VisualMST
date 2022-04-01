@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Alert, Container, Form, Button } from "react-bootstrap";
 import MainNavigaton from "../components/layout/MainNavigation";
 import Centered from "../components/ui/Centered";
-import evalsheet from "../VisualMST_Eval.pdf";
+import evalsheet from "../images/VisualMST_Eval.pdf";
 
 function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
