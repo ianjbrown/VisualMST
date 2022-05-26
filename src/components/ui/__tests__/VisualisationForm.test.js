@@ -88,10 +88,10 @@ test("Selection field for gen/import graph loads, file field loads when import i
 
   userEvent.selectOptions(
     field,
-    screen.getByRole("option", { name: "Import Graph" })
+    screen.getByRole("option", { name: "Import Graph from file" })
   );
   rerender(
-    <VisualisationForm onGenImpChange={jest.fn()} genImp="Import Graph" />
+    <VisualisationForm onGenImpChange={jest.fn()} genImp="Import Graph from file" />
   );
   fileField = screen.queryByLabelText("Graph File");
   await waitFor(() => {
@@ -100,7 +100,7 @@ test("Selection field for gen/import graph loads, file field loads when import i
 });
 
 test("test file upload works as expected", () => {
-    render(<VisualisationForm onFileChange={jest.fn()} genImp="Import Graph" />);
+    render(<VisualisationForm onFileChange={jest.fn()} genImp="Import Graph from file" />);
     const fileField = screen.queryByLabelText("Graph File");
     userEvent.upload(fileField, five);
     expect(fileField.files[0]).toBe(five);

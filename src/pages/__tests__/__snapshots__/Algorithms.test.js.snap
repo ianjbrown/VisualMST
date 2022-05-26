@@ -183,7 +183,10 @@ Array [
                   Generate Graph
                 </option>
                 <option>
-                  Import Graph
+                  Import Graph from file
+                </option>
+                <option>
+                  Import Graph from text box
                 </option>
               </select>
             </div>
@@ -251,7 +254,10 @@ Array [
                   Generate Graph
                 </option>
                 <option>
-                  Import Graph
+                  Import Graph from file
+                </option>
+                <option>
+                  Import Graph from text box
                 </option>
               </select>
             </div>

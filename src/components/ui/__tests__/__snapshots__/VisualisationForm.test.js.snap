@@ -47,7 +47,10 @@ exports[`Visualisation Form matches snapshot 1`] = `
         Generate Graph
       </option>
       <option>
-        Import Graph
+        Import Graph from file
+      </option>
+      <option>
+        Import Graph from text box
       </option>
     </select>
   </div>
