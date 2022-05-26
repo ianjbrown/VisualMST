@@ -18,6 +18,7 @@ function AlgorithmsPage() {
   const [startingVertex, setStartingVertex] = useState(0);
   const [genImp, setGenImp] = useState();
   const [selectedFile, setSelectedFile] = useState();
+  const [textBox, setTextBox] = useState(`0,1,1` + `\n` + `0,4,4` + `\n` + `0,5,5` + `\n` + `1,2,2` + `\n` + `1,3,5` + `\n` + `1,4,4` + `\n` + `2,3,5` + `\n` + `3,4,7`);
   const [selectedGraph, setSelectedGraph] = useState();
   const [selectedMSTGraph, setSelectedMSTGraph] = useState();
   const [importError, setImportError] = useState(false);
@@ -40,6 +41,10 @@ function AlgorithmsPage() {
 
   function handleFileChange(value) {
     setSelectedFile(value);
+  }
+
+  function handleTextBoxChange(value) {
+    setTextBox(value);
   }
 
   async function generateHelper() {
@@ -110,11 +115,33 @@ function AlgorithmsPage() {
     });
   }
 
+  function importTextHelper() {
+    const graphLines = textBox.split("\n")
+    var g = new Graph(noOfVertices);
+      g.importGraph(graphLines);
+      if (!g.isConnected(0)) {
+        setImportError(true);
+        return history.replace("/algorithms/");
+      }
+
+      setSelectedGraph(g);
+
+      if (key === "kruskal") {
+        setSelectedMSTGraph(g.kruskal());
+        history.replace("/algorithms/" + key);
+      } else if (key === "prim") {
+        setSelectedMSTGraph(g.prim(startingVertex));
+        history.replace("/algorithms/" + key);
+      }
+  }
+
   function submitHandler(event) {
     if (genImp === "Generate Graph") {
       generateHelper();
-    } else if (genImp === "Import Graph") {
+    } else if (genImp === "Import Graph from file") {
       importHelper();
+    } else {
+      importTextHelper(event);
     }
   }
 
@@ -156,6 +183,7 @@ function AlgorithmsPage() {
                     onVerticesChange={handleVerticesChange}
                     onGenImpChange={handleGenImpChange}
                     onFileChange={handleFileChange}
+                    onTextBoxChange={handleTextBoxChange}
                     onSubmit={submitHandler}
                     alg={key}
                   />
@@ -168,6 +196,7 @@ function AlgorithmsPage() {
                     onStartingChange={handleStartingChange}
                     onGenImpChange={handleGenImpChange}
                     onFileChange={handleFileChange}
+                    onTextBoxChange={handleTextBoxChange}
                     onSubmit={submitHandler}
                     alg={key}
                   />
